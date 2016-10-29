@@ -25,6 +25,16 @@ angular.module('webApps').config(
                     $state.go('home');
                 }
             }]
+        }).state('change-password', {
+            url: '/change-password',
+            templateUrl: '/change-password.html',
+            controller: 'AuthController',
+            controllerAs: 'vm',
+            onEnter: ['$state', 'auth', function($state, auth) {
+                if (!auth.isLoggedIn()) {
+                    $state.go('home');
+                }
+            }]
         });
 
         $urlRouterProvider.otherwise('home');

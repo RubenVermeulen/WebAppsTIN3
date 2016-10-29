@@ -2,13 +2,18 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var passport = require('passport');
+var jwt = require('express-jwt');
 var config = require('../config/config.json');
 var mailgun = require('mailgun-js')(config.mailgun);
 
 // models
 var User = mongoose.model('User');
 
+// middlewares
+var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
+
 router.post('/register', function(req, res, next) {
+
     if (!req.body.email || !req.body.firstName || !req.body.lastName || !req.body.password) {
         return res.status(400).json({message: 'Please fill out all fields'});
     }
@@ -38,11 +43,13 @@ router.post('/register', function(req, res, next) {
 
         return res.json({token: user.generateJWT()});
     });
+
 });
 
 router.post('/login', function(req, res, next) {
+
     if ( ! req.body.email || ! req.body.password) {
-        return res.status(400).json({message: 'Please fill out all fields'});
+        return res.status(400).json({message: 'Please fill out all fields.'});
     }
 
     // middleware
@@ -58,6 +65,50 @@ router.post('/login', function(req, res, next) {
             return res.status(401).json(info);
         }
     })(req, res, next);
+
+});
+
+router.put('/changePassword', auth, function(req, res, next) {
+
+    if ( ! req.body.passwordCurrent || ! req.body.passwordNew || ! req.body.passwordConfirm) {
+        return res.status(400).json({message: 'Please fill out all fields.'});
+    }
+
+    if (req.body.passwordNew != req.body.passwordConfirm) {
+        return res.status(400).json({message: 'Confirm password is different from new password.'});
+    }
+
+    User.findOne({email: req.payload.email}, function (err, user) {
+        if (err) {
+            return next(err);
+        }
+
+        if (!user.validPassword(req.body.passwordCurrent)) {
+            return res.status(400).json({message: 'Incorrect password.'});
+            // return done(null, false, {message: 'Incorrect password.'});
+        }
+
+        user.setPassword(req.body.passwordNew);
+
+        user.save(function (err) {
+            if (err) {
+                return next(err);
+            }
+
+            var data = {
+                from: 'no-reply@rubenvermeulen.be',
+                to: user.email,
+                subject: 'Password changed',
+                text: 'Your password has changed!'
+            };
+
+            mailgun.messages().send(data, function(err, body) {
+            });
+
+            return res.json({message: 'Password changed.'});
+        });
+    });
+
 });
 
 module.exports = router;

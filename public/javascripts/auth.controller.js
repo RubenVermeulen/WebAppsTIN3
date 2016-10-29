@@ -5,6 +5,7 @@ angular.module('webApps').controller('AuthController',
         vm.user = {};
         vm.register = register;
         vm.logIn = logIn;
+        vm.changePassword = changePassword;
 
         function register() {
             auth.register(vm.user).error(function(error) {
@@ -12,7 +13,7 @@ angular.module('webApps').controller('AuthController',
             }).then(function() {
                 $state.go('home');
             });
-        };
+        }
 
         function logIn() {
             auth.logIn(vm.user).error(function(error) {
@@ -20,6 +21,17 @@ angular.module('webApps').controller('AuthController',
             }).then(function() {
                 $state.go('home');
             });
-        };
+        }
+
+        function changePassword() {
+            auth.changePassword(vm.user).error(function(error) {
+                vm.error = error;
+                vm.success = null;
+            }).then(function(success) {
+                vm.success = success.data;
+                vm.error = null;
+                vm.user = {};
+            })
+        }
     }
 );

@@ -6,7 +6,8 @@ angular.module('webApps').factory('auth', function($http, $window) {
         currentUser: currentUser,
         register: register,
         logIn: logIn,
-        logOut: logOut
+        logOut: logOut,
+        changePassword: changePassword
     };
 
     function saveToken(token) {
@@ -15,7 +16,7 @@ angular.module('webApps').factory('auth', function($http, $window) {
 
     function getToken() {
         return $window.localStorage['web-apps-token'];
-    };
+    }
 
     function isLoggedIn() {
         var token = auth.getToken();
@@ -27,7 +28,7 @@ angular.module('webApps').factory('auth', function($http, $window) {
         }
 
         return false;
-    };
+    }
 
     function currentUser() {
         if (auth.isLoggedIn()) {
@@ -36,23 +37,29 @@ angular.module('webApps').factory('auth', function($http, $window) {
 
             return payload.firstName + ' ' + payload.lastName;
         }
-    };
+    }
 
     function register(user) {
         return $http.post('/auth/register', user).success(function(data) {
             auth.saveToken(data.token);
         });
-    };
+    }
 
     function logIn(user) {
         return $http.post('/auth/login', user).success(function(data) {
             auth.saveToken(data.token);
         });
-    };
+    }
 
     function logOut() {
         $window.localStorage.removeItem('web-apps-token');
-    };
+    }
+
+    function changePassword(user) {
+        return $http.put('/auth/changePassword', user, {
+            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        });
+    }
 
     return auth;
 });
