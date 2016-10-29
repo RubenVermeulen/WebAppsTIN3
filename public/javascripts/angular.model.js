@@ -1,0 +1,1 @@
+angular.module('webApps', ['ui.router']);
