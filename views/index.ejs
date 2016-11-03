@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My Angular App!</title>
+
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="stylesheets/style.css" rel="stylesheet">
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
@@ -28,152 +30,177 @@
 </head>
 
 <body ng-app="webApps">
-    <nav class="navbar navbar-default pull-right" ng-controller="NavController as vm">
-        <ul class="nav navbar-nav">
-            <li ng-show="vm.isLoggedIn()"><a>Welcome, {{ vm.currentUser() }}</a></li>
-            <li ng-show="vm.isLoggedIn()"><a href="/#/change-password">Change password</a></li>
-            <li ng-show="vm.isLoggedIn()"><a href="" ng-click="vm.logOut()">Log Out</a></li>
-            <li ng-hide="vm.isLoggedIn()"><a href="/#/login">Log In</a></li>
-            <li ng-hide="vm.isLoggedIn()"><a href="/#/register">Register</a></li>
-        </ul>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top" ng-controller="NavController as vm">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">facebook 2.0</a>
+            </div>
+
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/#/home">Timeline</a></li>
+                    <li><a href="#friends">Friends</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Login and register -->
+                    <li ng-hide="vm.isLoggedIn()"><a href="/#/login">Log In</a></li>
+                    <li ng-hide="vm.isLoggedIn()"><a href="/#/register">Register</a></li>
+
+                    <!-- Logged in-->
+                    <li ng-show="vm.isLoggedIn()" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ vm.currentUser() }} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Profile</a></li>
+                            <li><a href="/#/change-password">Change password</a></li>
+                            <li><a href="#">Change settings</a></li>
+                        </ul>
+                    </li>
+                    <li ng-show="vm.isLoggedIn()"><a href="" ng-click="vm.logOut()">Logout</a></li>
+                </ul>
+            </div>
+        </div>
     </nav>
 
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-          <!-- Inline templates will be injected here  -->
-          <ui-view></ui-view>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- Inline templates will be injected here  -->
+                <ui-view></ui-view>
+            </div>
         </div>
+
+        <!-- Inline templates  -->
+        <script type="text/ng-template" id="/home.html">
+            <h1>Timeline</h1>
+        </script>
+
+        <script type="text/ng-template" id="/register.html">
+            <h1>Web Apps</h1>
+
+            <div ng-show="vm.error" class="alert alert-danger row">
+                <span>{{ vm.error.message }}</span>
+            </div>
+
+            <form ng-submit="vm.register()"
+                  style="margin-top:30px;">
+                <h3>Register</h3>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email"
+                           id="email"
+                           class="form-control"
+                           placeholder="Email"
+                           ng-model="vm.user.email"></input>
+                </div>
+                <div class="form-group">
+                    <label for="first-name">First name</label>
+                    <input type="text"
+                           id="first-name"
+                           class="form-control"
+                           placeholder="First name"
+                           ng-model="vm.user.firstName"></input>
+                </div>
+                <div class="form-group">
+                    <label for="last-name">Last name</label>
+                    <input type="text"
+                           id="last-name"
+                           class="form-control"
+                           placeholder="Last name"
+                           ng-model="vm.user.lastName"></input>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password"
+                           id="password"
+                           class="form-control"
+                           placeholder="Password"
+                           ng-model="vm.user.password"></input>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </script>
+
+        <script type="text/ng-template" id="/login.html">
+            <h1>Web Apps</h1>
+
+            <div ng-show="vm.error" class="alert alert-danger row">
+                <span>{{ vm.error.message }}</span>
+            </div>
+
+            <form ng-submit="vm.logIn()"
+                  style="margin-top:30px;">
+                <h3>Log In</h3>
+
+                <div class="form-group">
+                    <input type="email"
+                           class="form-control"
+                           placeholder="Email"
+                           ng-model="vm.user.email"></input>
+                </div>
+                <div class="form-group">
+                    <input type="password"
+                           class="form-control"
+                           placeholder="Password"
+                           ng-model="vm.user.password"></input>
+                </div>
+                <button type="submit" class="btn btn-primary">Log In</button>
+            </form>
+        </script>
+
+        <script type="text/ng-template" id="/change-password.html">
+            <h1>Web Apps</h1>
+
+            <div ng-show="vm.error" class="alert alert-danger row">
+                <span>{{ vm.error.message }}</span>
+            </div>
+
+            <div ng-show="vm.success" class="alert alert-success row">
+                <span>{{ vm.success.message }}</span>
+            </div>
+
+            <form ng-submit="vm.changePassword()"
+                  style="margin-top:30px;">
+                <h3>Change password</h3>
+
+                <div class="form-group">
+                    <label for="password-current">Current Password</label>
+                    <input type="password"
+                           id="password-current"
+                           class="form-control"
+                           placeholder="Email"
+                           ng-model="vm.user.passwordCurrent"></input>
+                </div>
+                <div class="form-group">
+                    <label for="password-new">New password</label>
+                    <input type="password"
+                           id="password-new"
+                           class="form-control"
+                           placeholder="First name"
+                           ng-model="vm.user.passwordNew"></input>
+                </div>
+                <div class="form-group">
+                    <label for="password-confirm">Confirm password</label>
+                    <input type="password"
+                           id="password-confirm"
+                           class="form-control"
+                           placeholder="Confirm password"
+                           ng-model="vm.user.passwordConfirm"></input>
+                </div>
+                <button type="submit" class="btn btn-primary">Change password</button>
+            </form>
+        </script>
     </div>
 
-    <!-- Inline templates  -->
-    <script type="text/ng-template" id="/home.html">
-        <div class="page-header">
-            <h1>Web Apps</h1>
-        </div>
-    </script>
-
-    <script type="text/ng-template" id="/register.html">
-        <div class="page-header">
-            <h1>Web Apps</h1>
-        </div>
-
-        <div ng-show="vm.error" class="alert alert-danger row">
-            <span>{{ vm.error.message }}</span>
-        </div>
-
-        <form ng-submit="vm.register()"
-              style="margin-top:30px;">
-            <h3>Register</h3>
-
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email"
-                       id="email"
-                       class="form-control"
-                       placeholder="Email"
-                       ng-model="vm.user.email"></input>
-            </div>
-            <div class="form-group">
-                <label for="first-name">First name</label>
-                <input type="text"
-                       id="first-name"
-                       class="form-control"
-                       placeholder="First name"
-                       ng-model="vm.user.firstName"></input>
-            </div>
-            <div class="form-group">
-                <label for="last-name">Last name</label>
-                <input type="text"
-                       id="last-name"
-                       class="form-control"
-                       placeholder="Last name"
-                       ng-model="vm.user.lastName"></input>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password"
-                       id="password"
-                       class="form-control"
-                       placeholder="Password"
-                       ng-model="vm.user.password"></input>
-            </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
-    </script>
-
-    <script type="text/ng-template" id="/login.html">
-        <div class="page-header">
-            <h1>Web Apps</h1>
-        </div>
-
-        <div ng-show="vm.error" class="alert alert-danger row">
-            <span>{{ vm.error.message }}</span>
-        </div>
-
-        <form ng-submit="vm.logIn()"
-              style="margin-top:30px;">
-            <h3>Log In</h3>
-
-            <div class="form-group">
-                <input type="email"
-                       class="form-control"
-                       placeholder="Email"
-                       ng-model="vm.user.email"></input>
-            </div>
-            <div class="form-group">
-                <input type="password"
-                       class="form-control"
-                       placeholder="Password"
-                       ng-model="vm.user.password"></input>
-            </div>
-            <button type="submit" class="btn btn-primary">Log In</button>
-        </form>
-    </script>
-
-    <script type="text/ng-template" id="/change-password.html">
-        <div class="page-header">
-            <h1>Web Apps</h1>
-        </div>
-
-        <div ng-show="vm.error" class="alert alert-danger row">
-            <span>{{ vm.error.message }}</span>
-        </div>
-
-        <div ng-show="vm.success" class="alert alert-success row">
-            <span>{{ vm.success.message }}</span>
-        </div>
-
-        <form ng-submit="vm.changePassword()"
-              style="margin-top:30px;">
-            <h3>Change password</h3>
-
-            <div class="form-group">
-                <label for="password-current">Current Password</label>
-                <input type="password"
-                       id="password-current"
-                       class="form-control"
-                       placeholder="Email"
-                       ng-model="vm.user.passwordCurrent"></input>
-            </div>
-            <div class="form-group">
-                <label for="password-new">New password</label>
-                <input type="password"
-                       id="password-new"
-                       class="form-control"
-                       placeholder="First name"
-                       ng-model="vm.user.passwordNew"></input>
-            </div>
-            <div class="form-group">
-                <label for="password-confirm">Confirm password</label>
-                <input type="password"
-                       id="password-confirm"
-                       class="form-control"
-                       placeholder="Confirm password"
-                       ng-model="vm.user.passwordConfirm"></input>
-            </div>
-            <button type="submit" class="btn btn-primary">Change password</button>
-        </form>
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 
 </html>
