@@ -17,6 +17,7 @@
     <script src="javascripts/angularApp.js"></script>
 
     <script src="javascripts/auth.factory.js"></script>
+    <script src="javascripts/post.factory.js"></script>
 
     <script src="javascripts/main.controller.js"></script>
     <script src="javascripts/auth.controller.js"></script>
@@ -45,8 +46,9 @@
 
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/#/home">Timeline</a></li>
+                    <li><a href="/#/timeline">Timeline</a></li>
                     <li><a href="#friends">Friends</a></li>
+                    <li><a href="#friends">Search</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Login and register -->
@@ -78,7 +80,34 @@
 
         <!-- Inline templates  -->
         <script type="text/ng-template" id="/home.html">
+            <h1>Home</h1>
+
+        </script>
+
+        <script type="text/ng-template" id="/timeline.html">
             <h1>Timeline</h1>
+            <form ng-submit="vm.createPost()">
+                <div class="form-group">
+                    <input type="text"
+                           id="body"
+                           class="form-control"
+                           placeholder="How are you doing today?"
+                           ng-model="vm.post.body"></input>
+                </div>
+                <button type="submit" class="btn btn-primary">Post</button>
+            </form>
+            <hr>
+            <div ng-repeat="post in vm.posts | orderBy: '-updatedAt'">
+                <p>
+                    <a href="">{{ post.author }}</a>, <time datetime="{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}">{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}</time>
+                    <br>
+                    {{ post.body }}
+                    <br><br>
+                    <span class="like" ng-click="vm.incrementUpvotes(post)">Like</span> - {{ post.upvotes }}
+                </p>
+
+                <hr>
+            </div>
         </script>
 
         <script type="text/ng-template" id="/register.html">

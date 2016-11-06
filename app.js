@@ -10,6 +10,8 @@ var passport = require('passport');
 
 // Models
 require('./models/Users');
+require('./models/Posts');
+require('./models/Comments');
 
 require('./config/passport');
 
@@ -17,6 +19,7 @@ mongoose.connect('mongodb://localhost/web-apps');
 
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
+var posts = require('./routes/posts');
 
 var app = express();
 
@@ -36,6 +39,7 @@ app.use(passport.initialize());
 
 app.use('/', routes);
 app.use('/auth', auth);
+app.use('/posts', posts);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

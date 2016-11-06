@@ -1,3 +1,18 @@
 body {
   padding-top: 70px;
 }
+
+time {
+  font-size: 0.875em;
+  color: #909090;
+}
+
+span.like {
+  font-weight: bold;
+  color: #428bca;
+  cursor: pointer;
+}
+
+span.like:hover {
+  text-decoration: underline;
+}

@@ -5,6 +5,21 @@ angular.module('webApps').config(
             templateUrl: '/home.html',
             controller: 'MainController',
             controllerAs: 'vm'
+        }).state('timeline', {
+            url: '/timeline',
+            templateUrl: '/timeline.html',
+            controller: 'MainController',
+            controllerAs: 'vm',
+            onEnter: ['$state', 'auth', function($state, auth) {
+                if ( ! auth.isLoggedIn()) {
+                    $state.go('login');
+                }
+            }],
+            resolve: {
+                postPromise: ['posts', function(posts) {
+                    return posts.getAll();
+                }]
+            }
         }).state('login', {
             url: '/login',
             templateUrl: '/login.html',
@@ -32,7 +47,7 @@ angular.module('webApps').config(
             controllerAs: 'vm',
             onEnter: ['$state', 'auth', function($state, auth) {
                 if (!auth.isLoggedIn()) {
-                    $state.go('home');
+                    $state.go('login');
                 }
             }]
         });
