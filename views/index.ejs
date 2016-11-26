@@ -18,10 +18,12 @@
 
     <script src="javascripts/auth.factory.js"></script>
     <script src="javascripts/post.factory.js"></script>
+    <script src="javascripts/user.factory.js"></script>
 
     <script src="javascripts/main.controller.js"></script>
     <script src="javascripts/auth.controller.js"></script>
     <script src="javascripts/nav.controller.js"></script>
+    <script src="javascripts/users.controller.js"></script>
 
     <style>
         .glyphicon-thumbs-up {
@@ -47,8 +49,7 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="/#/timeline">Timeline</a></li>
-                    <li><a href="#friends">Friends</a></li>
-                    <li><a href="#friends">Search</a></li>
+                    <li><a href="/#/users">Users</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Login and register -->
@@ -57,7 +58,7 @@
 
                     <!-- Logged in-->
                     <li ng-show="vm.isLoggedIn()" class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ vm.currentUser() }} <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ vm.currentUser().firstName }} {{ vm.currentUser().lastName }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Profile</a></li>
                             <li><a href="/#/change-password">Change password</a></li>
@@ -227,6 +228,8 @@
             </form>
         </script>
     </div>
+
+    <% include user/all.ejs %>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

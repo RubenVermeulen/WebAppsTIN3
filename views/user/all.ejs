@@ -1,0 +1,22 @@
+<script type="text/ng-template" id="/users.html">
+    <h1>Users</h1>
+    <hr>
+
+    {{vm.follows('581468f2ecb64b2ab0be8c08')}}
+
+    <div ng-repeat="user in vm.users">
+        <div class="row" style="padding-top: 8px; padding-bottom: 8px;">
+            <div class="col-xs-5">
+                {{user.firstName}} {{user.lastName}}
+            </div>
+            <div class="col-xs-5">
+                {{user.email}}
+            </div>
+            <div class="col-xs-2">
+                    <button ng-click="vm.subscribe(user._id)">Follow</button>
+                    <button ng-click="vm.unsubscribe(user._id)">Unfollow</button>
+            </div>
+        </div>
+        <hr>
+    </div>
+</script>

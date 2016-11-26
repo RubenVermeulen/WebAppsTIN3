@@ -7,7 +7,8 @@ var UserSchema = new mongoose.Schema({
     firstName: String,
     lastName: String,
     hash: String,
-    salt: String
+    salt: String,
+    follows: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
 

@@ -20,6 +20,8 @@ mongoose.connect('mongodb://localhost/web-apps');
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var posts = require('./routes/posts');
+var follows = require('./routes/follows');
+var users = require('./routes/users');
 
 var app = express();
 
@@ -40,6 +42,8 @@ app.use(passport.initialize());
 app.use('/', routes);
 app.use('/auth', auth);
 app.use('/posts', posts);
+app.use('/follows', follows);
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

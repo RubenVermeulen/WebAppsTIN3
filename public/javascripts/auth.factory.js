@@ -35,7 +35,7 @@ angular.module('webApps').factory('auth', function($http, $window) {
             var token = auth.getToken();
             var payload = angular.fromJson($window.atob(token.split('.')[1]));
 
-            return payload.firstName + ' ' + payload.lastName;
+            return payload;
         }
     }
 

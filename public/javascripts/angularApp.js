@@ -50,6 +50,21 @@ angular.module('webApps').config(
                     $state.go('login');
                 }
             }]
+        }).state('users', {
+            url: '/users',
+            templateUrl: '/users.html',
+            controller: 'UsersController',
+            controllerAs: 'vm',
+            onEnter: ['$state', 'auth', function($state, auth) {
+                if ( ! auth.isLoggedIn()) {
+                    $state.go('login');
+                }
+            }],
+            resolve: {
+                postPromise: ['users', function(users) {
+                    return users.getAll();
+                }]
+            }
         });
 
         $urlRouterProvider.otherwise('home');
