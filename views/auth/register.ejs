@@ -1,0 +1,46 @@
+<script type="text/ng-template" id="/register.html">
+    <h1>Web Apps</h1>
+
+    <div ng-show="vm.error" class="alert alert-danger row">
+        <span>{{ vm.error.message }}</span>
+    </div>
+
+    <form ng-submit="vm.register()"
+          style="margin-top:30px;">
+        <h3>Register</h3>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email"
+                   id="email"
+                   class="form-control"
+                   placeholder="Email"
+                   ng-model="vm.user.email"></input>
+        </div>
+        <div class="form-group">
+            <label for="first-name">First name</label>
+            <input type="text"
+                   id="first-name"
+                   class="form-control"
+                   placeholder="First name"
+                   ng-model="vm.user.firstName"></input>
+        </div>
+        <div class="form-group">
+            <label for="last-name">Last name</label>
+            <input type="text"
+                   id="last-name"
+                   class="form-control"
+                   placeholder="Last name"
+                   ng-model="vm.user.lastName"></input>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password"
+                   id="password"
+                   class="form-control"
+                   placeholder="Password"
+                   ng-model="vm.user.password"></input>
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</script>

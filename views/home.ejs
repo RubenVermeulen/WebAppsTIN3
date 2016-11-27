@@ -1,0 +1,25 @@
+<script type="text/ng-template" id="/timeline.html">
+    <h1>Tweets</h1>
+    <form ng-submit="vm.createPost()">
+        <div class="form-group">
+            <input type="text"
+                   id="body"
+                   class="form-control"
+                   placeholder="How are you doing today?"
+                   ng-model="vm.post.body"></input>
+        </div>
+        <button type="submit" class="btn btn-primary">Post</button>
+    </form>
+    <hr>
+    <div ng-repeat="post in vm.posts | orderBy: '-updatedAt'">
+        <p>
+            <a href="/#/users/{{ post.author._id }}">{{ post.author.firstName }} {{ post.author.lastName }}</a>, <time datetime="{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}">{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}</time>
+            <br>
+            {{ post.body }}
+            <br><br>
+            <span class="like" ng-click="vm.incrementUpvotes(post)">Like</span> - {{ post.upvotes }}
+        </p>
+
+        <hr>
+    </div>
+</script>

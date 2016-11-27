@@ -1,0 +1,36 @@
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top" ng-controller="NavController as vm">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">twitter 2.0</a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/#/timeline">Timeline</a></li>
+                <li><a href="/#/users">Users</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <!-- Login and register -->
+                <li ng-hide="vm.isLoggedIn()"><a href="/#/login">Log In</a></li>
+                <li ng-hide="vm.isLoggedIn()"><a href="/#/register">Register</a></li>
+
+                <!-- Logged in-->
+                <li ng-show="vm.isLoggedIn()" class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ vm.currentUser().firstName }} {{ vm.currentUser().lastName }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/#/users/{{vm.currentUser()._id}}">Profile</a></li>
+                        <li><a href="/#/change-password">Change password</a></li>
+                    </ul>
+                </li>
+                <li ng-show="vm.isLoggedIn()"><a href="" ng-click="vm.logOut()">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
