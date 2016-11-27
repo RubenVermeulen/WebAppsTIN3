@@ -13,16 +13,16 @@ angular.module('webApps').factory('users', function($http, auth) {
     function getAll() {
         return $http.get('/users', {
             headers: {Authorization: 'Bearer ' + auth.getToken()}
-        }).then(function(data) {
-            angular.copy(data.data, o.users);
+        }).success(function(data) {
+            angular.copy(data, o.users);
         });
     }
 
     function get(userId) {
         return $http.get('/users/' + userId, {
             headers: {Authorization: 'Bearer ' + auth.getToken()}
-        }).then(function(data) {
-            o.user = data.data;
+        }).success(function(data) {
+            o.user = data;
         });
     }
 
