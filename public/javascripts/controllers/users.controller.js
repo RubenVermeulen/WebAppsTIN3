@@ -17,6 +17,11 @@ angular.module('webApps').controller('UsersController',
         vm.downvote = downvote;
         vm.hasUpvoted = hasUpvoted;
 
+        vm.showTweets = true;
+        vm.showFollowers = false;
+        vm.showFollowing = false;
+        vm.toggleTabs = toggleTabs;
+
         function create() {
             posts.create(vm.post).error(function() {
                 Flash.create('danger', '<strong>Danger!</strong> All fields are required.');
@@ -62,6 +67,26 @@ angular.module('webApps').controller('UsersController',
 
         function hasUpvoted(post) {
             return post.upvotes.indexOf(auth.currentUser()._id) !== -1;
+        }
+
+        function toggleTabs(tab) {
+            switch (tab) {
+                case 'tweets':
+                    vm.showTweets = true;
+                    vm.showFollowers = false;
+                    vm.showFollowing = false;
+                    break;
+                case 'followers':
+                    vm.showTweets = false;
+                    vm.showFollowers = true;
+                    vm.showFollowing = false;
+                    break;
+                case 'following':
+                    vm.showTweets = false;
+                    vm.showFollowers = false;
+                    vm.showFollowing = true;
+                    break;
+            }
         }
     }
 );

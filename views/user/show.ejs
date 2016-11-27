@@ -35,13 +35,17 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-6 text-center">
-                            <h3 class="margin-0"><strong>{{vm.user.followers.length}}</strong></h3>
-                            followers
+                        <div class="col-md-4 text-center">
+                            <h3 class="margin-0"><strong>{{vm.posts.length}}</strong></h3>
+                            <a href="" ng-click="vm.toggleTabs('tweets')">tweets</a>
                         </div>
-                        <div class="col-md-6 text-center">
+                        <div class="col-md-4 text-center">
+                            <h3 class="margin-0"><strong>{{vm.user.followers.length}}</strong></h3>
+                            <a href="" ng-click="vm.toggleTabs('followers')">followers</a>
+                        </div>
+                        <div class="col-md-4 text-center">
                             <h3 class="margin-0"><strong>{{vm.user.follows.length}}</strong></h3>
-                            following
+                            <a href="" ng-click="vm.toggleTabs('following')">following</a>
                         </div>
                     </div>
                 </div>
@@ -49,54 +53,97 @@
 
             <hr>
 
-            <div ng-hide="vm.user._id !== vm.currentUser()._id">
-                <div class="row">
-                    <div class="col-md-12">
-                        <flash-message duration="5000" show-close="true"></flash-message>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <form ng-submit="vm.create()" class="form">
-                            <div class="row">
-                                <div class="form-group col-xs-9 padding-right-0">
-                                    <input type="text"
-                                           id="body"
-                                           class="form-control tweet-input"
-                                           placeholder="How are you doing today?"
-                                           ng-model="vm.post.body"></input>
-                                </div>
-                                <div class="col-xs-3 padding-left-0">
-                                    <button type="submit" class="btn btn-primary form-control tweet-button">Tweet</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div ng-hide="vm.posts.length !== 0" class="row">
-                <div class="col-md-12">
-                    <p><strong>You better start tweeting or else ... 👻</strong></p>
-                </div>
-            </div>
-            <div ng-show="vm.posts.length !== 0">
-                <div ng-repeat="post in vm.posts | orderBy: '-updatedAt'">
+            <div ng-show="vm.showTweets">
+                <div ng-hide="vm.user._id !== vm.currentUser()._id">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="tweet-card">
-                                <a href="/#/users/{{ post.author._id }}">{{ post.author.firstName }} {{ post.author.lastName }}</a><time class="datetime" datetime="{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}">{{ post.updatedAt | relativeDate }}</time>
-                                <br>
-                                {{ post.body }}
-                                <br><br>
-                                <button ng-hide="vm.hasUpvoted(post)" ng-click="vm.upvote(post)" class="btn btn-success">
-                                    <span class="glyphicon glyphicon-thumbs-up vertical-align-middle"></span>
-                                </button>
-                                <button ng-show="vm.hasUpvoted(post)" ng-click="vm.downvote(post)" class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-thumbs-down vertical-align-middle"></span>
-                                </button>
-                                <span style="padding-left: 8px">
+                            <flash-message duration="5000" show-close="true"></flash-message>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form ng-submit="vm.create()" class="form">
+                                <div class="row">
+                                    <div class="form-group col-xs-9 padding-right-0">
+                                        <input type="text"
+                                               id="body"
+                                               class="form-control tweet-input"
+                                               placeholder="How are you doing today?"
+                                               ng-model="vm.post.body"></input>
+                                    </div>
+                                    <div class="col-xs-3 padding-left-0">
+                                        <button type="submit" class="btn btn-primary form-control tweet-button">Tweet</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div ng-hide="vm.posts.length !== 0" class="row">
+                    <div class="col-md-12">
+                        <p><strong>You better start tweeting or else ... 👻</strong></p>
+                    </div>
+                </div>
+                <div ng-show="vm.posts.length !== 0">
+                    <div ng-repeat="post in vm.posts | orderBy: '-updatedAt'">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="tweet-card">
+                                    <a href="/#/users/{{ post.author._id }}">{{ post.author.firstName }} {{ post.author.lastName }}</a><time class="datetime" datetime="{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}">{{ post.updatedAt | relativeDate }}</time>
+                                    <br>
+                                    {{ post.body }}
+                                    <br><br>
+                                    <button ng-hide="vm.hasUpvoted(post)" ng-click="vm.upvote(post)" class="btn btn-success">
+                                        <span class="glyphicon glyphicon-thumbs-up vertical-align-middle"></span>
+                                    </button>
+                                    <button ng-show="vm.hasUpvoted(post)" ng-click="vm.downvote(post)" class="btn btn-danger">
+                                        <span class="glyphicon glyphicon-thumbs-down vertical-align-middle"></span>
+                                    </button>
+                                    <span style="padding-left: 8px">
                                     <strong>{{ post.upvotes.length }}</strong> upvote<span ng-show="post.upvotes.length !== 1">s</span>
                                 </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="vm.showFollowers">
+                <div class="tweet-card">
+                    <h4>Followers</h4>
+
+                    <div ng-show="vm.user.followers.length === 0">
+                        <hr>
+                        <p><strong>{{ vm.user.firstName }} {{ vm.user.lastName }}</strong> has no followers.</p>
+                    </div>
+
+                    <div ng-repeat="follower in vm.user.followers | orderBy: ['firstName', 'lastName']">
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="/#/users/{{ follower._id }}"><strong>{{ follower.firstName }} {{ follower.lastName }}</strong> ({{ follower.email }})</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="vm.showFollowing">
+                <div class="tweet-card">
+                    <h4>Following</h4>
+
+                    <div ng-show="vm.user.follows.length === 0">
+                        <hr>
+                        <p><strong>{{ vm.user.firstName }} {{ vm.user.lastName }}</strong> is following nobody.</p>
+                    </div>
+
+                    <div ng-repeat="follows in vm.user.follows | orderBy: ['firstName', 'lastName']">
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="/#/users/{{ follows._id }}"><strong>{{ follows.firstName }} {{ follows.lastName }}</strong> ({{ follows.email }})</a>
                             </div>
                         </div>
                     </div>

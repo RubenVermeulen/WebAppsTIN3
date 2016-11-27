@@ -46,12 +46,18 @@ router.get('/', auth, function(req, res, next) {
 
 router.get('/:user', auth, function(req, res, next) {
 
-    req.user.populate('follows', function(err, user) {
+    req.user.populate('follows',function(err, user) {
         if (err) {
             return next(err);
         }
 
-        return res.json(user);
+        user.populate('followers', function(err, user) {
+            if (err) {
+                return next(err);
+            }
+
+            return res.json(user);
+        });
     });
 
 });

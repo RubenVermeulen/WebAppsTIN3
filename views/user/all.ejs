@@ -8,7 +8,7 @@
     </div>
 
     <hr>
-    <div ng-repeat="user in vm.users">
+    <div ng-repeat="user in vm.users | orderBy: ['firstName', 'lastName']">
         <div class="row" style="padding-top: 8px; padding-bottom: 8px;">
             <div class="col-xs-5">
                 <a href="/#/users/{{user._id}}">
