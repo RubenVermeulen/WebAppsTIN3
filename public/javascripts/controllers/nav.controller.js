@@ -1,9 +1,14 @@
 angular.module('webApps').controller('NavController',
-    function(auth) {
+    function(auth, $state) {
         var vm = this;
 
         vm.isLoggedIn = auth.isLoggedIn;
         vm.currentUser = auth.currentUser;
-        vm.logOut = auth.logOut;
+        vm.logOut = logOut;
+
+        function logOut() {
+            auth.logOut();
+            $state.go('login');
+        }
     }
 );
