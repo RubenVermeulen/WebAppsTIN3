@@ -3,6 +3,10 @@
 
     <flash-message duration="5000" show-close="true"></flash-message>
 
+    <div ng-show="vm.users.length === 0">
+        <p>You're the only one on this lonely planet. 😢</p>
+    </div>
+
     <hr>
     <div ng-repeat="user in vm.users">
         <div class="row" style="padding-top: 8px; padding-bottom: 8px;">

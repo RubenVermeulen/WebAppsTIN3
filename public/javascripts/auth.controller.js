@@ -1,5 +1,5 @@
 angular.module('webApps').controller('AuthController',
-    function($state, auth) {
+    function($state, auth, Flash) {
         var vm = this;
 
         vm.user = {};
@@ -9,27 +9,25 @@ angular.module('webApps').controller('AuthController',
 
         function register() {
             auth.register(vm.user).error(function(error) {
-                vm.error = error;
-            }).then(function() {
+                Flash.create('danger', '<strong>Danger!</strong> ' + error.message );
+            }).success(function() {
                 $state.go('home');
             });
         }
 
         function logIn() {
             auth.logIn(vm.user).error(function(error) {
-                vm.error = error;
-            }).then(function() {
+                Flash.create('danger', '<strong>Danger!</strong> ' + error.message );
+            }).success(function() {
                 $state.go('home');
             });
         }
 
         function changePassword() {
             auth.changePassword(vm.user).error(function(error) {
-                vm.error = error;
-                vm.success = null;
-            }).then(function(success) {
-                vm.success = success.data;
-                vm.error = null;
+                Flash.create('danger', '<strong>Danger!</strong> ' + error.message );
+            }).success(function(success) {
+                Flash.create('success', '<strong>Success!</strong> Password changed!');
                 vm.user = {};
             })
         }

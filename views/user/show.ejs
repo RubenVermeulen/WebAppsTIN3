@@ -57,7 +57,7 @@
             </div>
             <div ng-hide="vm.posts.length !== 0" class="row">
                 <div class="col-md-12">
-                    <p>Nothing has been tweeted yet? Time to tweet!</p>
+                    <p><strong>You better start tweeting or else ... 👻</strong></p>
                 </div>
             </div>
             <div ng-show="vm.posts.length !== 0">
@@ -70,10 +70,10 @@
                                 {{ post.body }}
                                 <br><br>
                                 <button ng-hide="vm.hasUpvoted(post)" ng-click="vm.upvote(post)" class="btn btn-success">
-                                    <span class="glyphicon glyphicon-thumbs-up" style="vertical-align:middle"></span>
+                                    <span class="glyphicon glyphicon-thumbs-up vertical-align-middle"></span>
                                 </button>
                                 <button ng-show="vm.hasUpvoted(post)" ng-click="vm.downvote(post)" class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-thumbs-down" style="vertical-align:middle"></span>
+                                    <span class="glyphicon glyphicon-thumbs-down vertical-align-middle"></span>
                                 </button>
                                 <span style="padding-left: 8px">
                                     <strong>{{ post.upvotes.length }}</strong> upvote<span ng-show="post.upvotes.length !== 1">s</span>

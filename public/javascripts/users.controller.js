@@ -21,7 +21,7 @@ angular.module('webApps').controller('UsersController',
             posts.create(vm.post).error(function() {
                 Flash.create('danger', '<strong>Danger!</strong> All fields are required.');
             }).then(function() {
-                Flash.create('success', '<strong>Success!</strong> Tweet sent to the Bird Capital.');
+                Flash.create('success', '<strong>Success!</strong> Tweet sent to the Bird Capital. 👌');
             });
 
             vm.post = {};
