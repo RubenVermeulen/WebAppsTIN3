@@ -51,17 +51,29 @@ router.param('comment', function(req, res, next, id) {
     });
 });
 
-router.get('/', function(req, res, next) {
-    Post.find(function(err, posts) {
-        if(err) {return next(err);}
+router.get('/', auth, function(req, res, next) {
 
-        return res.json(posts);
+    User.findOne({_id: req.payload._id} ,function(err, user) {
+        if (err) {
+            return next(err);
+        }
+
+        Post.find({author: {$in: user.follows}})
+            .populate('author')
+            .exec(function(err, posts) {
+                if (err) {
+                    return next(err);
+                }
+
+                return res.json(posts);
+            });
     });
+
 });
 
 router.post('/', auth, function(req, res, next) {
     var post = new Post(req.body);
-    post.author = req.payload.firstName + ' ' + req.payload.lastName;
+    post.author = req.payload._id;
 
     post.save(function(err, post) {
         if (err) {

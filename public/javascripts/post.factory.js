@@ -12,8 +12,8 @@ angular.module('webApps').factory('posts', function($http, auth) {
     function getAll() {
         return $http.get('/posts', {
             headers: {Authorization: 'Bearer ' + auth.getToken()}
-        }).success(function(data) {
-            angular.copy(data, o.posts);
+        }).then(function(data) {
+            angular.copy(data.data, o.posts);
         });
     }
 
