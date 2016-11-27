@@ -117,7 +117,7 @@
                         <hr>
                         <p><strong>{{ vm.user.firstName }} {{ vm.user.lastName }}</strong> has no followers.</p>
                     </div>
-
+                    {{vm.followers}}
                     <div ng-repeat="follower in vm.followers | orderBy: ['firstName', 'lastName']">
                         <hr>
                         <div class="row">

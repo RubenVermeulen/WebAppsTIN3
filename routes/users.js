@@ -69,7 +69,7 @@ router.get('/:user/following', auth, function(req, res, next) {
             return next(err);
         }
 
-        return res.json(user.following);
+        return res.json(user.follows);
     });
 
 });
