@@ -15,8 +15,8 @@
                 {{user.email}}
             </div>
             <div class="col-xs-2">
-                    <button ng-hide="vm.isSubscribed(user)" ng-click="vm.subscribe(user)">Follow</button>
-                    <button ng-show="vm.isSubscribed(user)" ng-click="vm.unsubscribe(user)">Unfollow</button>
+                    <button ng-hide="vm.isSubscribed(user)" ng-click="vm.subscribe(user)" class="btn btn-success">Follow</button>
+                    <button ng-show="vm.isSubscribed(user)" ng-click="vm.unsubscribe(user)" class="btn btn-danger">Unfollow</button>
             </div>
         </div>
         <hr>

@@ -1,18 +1,67 @@
 body {
-  padding-top: 70px;
+    padding-top: 70px;
+    background: #f7f7f7;
 }
 
 time {
-  font-size: 0.875em;
-  color: #909090;
+    font-size: 0.875em;
+    color: #909090;
 }
 
 span.like {
-  font-weight: bold;
-  color: #428bca;
-  cursor: pointer;
+    font-weight: bold;
+    color: #428bca;
+    cursor: pointer;
 }
 
 span.like:hover {
-  text-decoration: underline;
+    text-decoration: underline;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    background: #1DA1F2;
+    color: #fff;
+}
+
+.tweet-card {
+    border-radius: 2px;
+    padding: 12px;
+    border: 1px solid #dadada;
+    margin-bottom: 16px;
+    background: #fff;
+}
+
+.btn {
+    border-radius: 2px;
+}
+
+.btn-primary {
+    background: #1DA1F2;
+    border-color: #1d86d1;
+}
+
+.datetime {
+    padding-left: 6px;
+}
+
+.form-control {
+    border-radius: 2px;
+}
+
+.tweet-button {
+    border-radius: 0 2px 2px 0
+}
+
+.tweet-input {
+    border-radius: 2px 0 0 2px
+}
+
+.padding-left-0 {
+    padding-left: 0;
+}
+
+.padding-right-0 {
+    padding-right: 0;
 }

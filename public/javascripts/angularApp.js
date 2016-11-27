@@ -2,11 +2,6 @@ angular.module('webApps').config(
     function($stateProvider, $urlRouterProvider) {
         $stateProvider.state('home', {
             url: '/home',
-            templateUrl: '/home.html',
-            controller: 'MainController',
-            controllerAs: 'vm'
-        }).state('timeline', {
-            url: '/timeline',
             templateUrl: '/timeline.html',
             controller: 'MainController',
             controllerAs: 'vm',
@@ -85,6 +80,6 @@ angular.module('webApps').config(
             }
         });
 
-        $urlRouterProvider.otherwise('home');
+        $urlRouterProvider.otherwise('login');
     }
 );

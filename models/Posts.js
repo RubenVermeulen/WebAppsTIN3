@@ -3,14 +3,9 @@ var mongoose = require('mongoose');
 var PostSchema = new mongoose.Schema({
     body: String,
     author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    upvotes: {type: Number, default: 0}
+    upvotes: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 }, {
     timestamps: true
 });
-
-PostSchema.methods.upvote = function(cb) {
-    this.upvotes += 1;
-    this.save(cb);
-};
 
 mongoose.model('Post', PostSchema);

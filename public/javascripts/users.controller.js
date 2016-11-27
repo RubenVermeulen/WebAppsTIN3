@@ -13,6 +13,9 @@ angular.module('webApps').controller('UsersController',
         vm.unsubscribe = unsubscribe;
         vm.isSubscribed = isSubscribed;
         vm.gravatar = gravatar;
+        vm.upvote = upvote;
+        vm.downvote = downvote;
+        vm.hasUpvoted = hasUpvoted;
 
         function create() {
             posts.create(vm.post).error(function() {
@@ -47,6 +50,18 @@ angular.module('webApps').controller('UsersController',
 
         function gravatar(email, size) {
             return 'https://www.gravatar.com/avatar/' + md5.createHash(email) + '?s=' + size + '&d=retro';
+        }
+
+        function upvote(post) {
+            posts.upvote(post);
+        }
+
+        function downvote(post) {
+            posts.downvote(post);
+        }
+
+        function hasUpvoted(post) {
+            return post.upvotes.indexOf(auth.currentUser()._id) !== -1;
         }
     }
 );

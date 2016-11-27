@@ -77,13 +77,43 @@ router.post('/', auth, function(req, res, next) {
 });
 
 router.put('/:post/upvote', auth, function(req, res, next) {
-    req.post.upvote(function(err, post) {
+
+    var value = req.post.upvotes.indexOf(req.payload._id);
+
+    if (value !== -1) {
+        return res.status(400).json({message: 'You\'ve already upvoted this post.'})
+    }
+
+    req.post.upvotes.push(req.payload._id);
+
+    req.post.save(function(err, post) {
         if (err) {
             return next(err);
         }
 
-        res.json(post);
+        return res.json(post);
     });
+
+});
+
+router.put('/:post/downvote', auth, function(req, res, next) {
+
+    var value = req.post.upvotes.indexOf(req.payload._id);
+
+    if (value === -1) {
+        return res.status(400).json({message: 'You\'ve haven\'t upvoted this post.'})
+    }
+
+    req.post.upvotes.pull(req.payload._id);
+
+    req.post.save(function(err, post) {
+        if (err) {
+            return next(err);
+        }
+
+        return res.json(post);
+    });
+
 });
 
 module.exports = router;

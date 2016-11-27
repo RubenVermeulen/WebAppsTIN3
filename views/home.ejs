@@ -2,14 +2,20 @@
     <h1>Tweets</h1>
 
     <div ng-repeat="post in vm.posts | orderBy: '-updatedAt'">
-        <p>
-            <a href="/#/users/{{ post.author._id }}">{{ post.author.firstName }} {{ post.author.lastName }}</a>, <time datetime="{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}">{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}</time>
+        <div class="tweet-card">
+            <strong><a href="/#/users/{{ post.author._id }}">{{ post.author.firstName }} {{ post.author.lastName }}</a></strong><time class="datetime" datetime="{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}">{{ post.updatedAt | relativeDate }}</time>
             <br>
             {{ post.body }}
             <br><br>
-            <span class="like" ng-click="vm.incrementUpvotes(post)">Like</span> - {{ post.upvotes }}
-        </p>
-
-        <hr>
+            <button ng-hide="vm.hasUpvoted(post)" ng-click="vm.upvote(post)" class="btn btn-success">
+                <span class="glyphicon glyphicon-thumbs-up" style="vertical-align:middle"></span>
+            </button>
+            <button ng-show="vm.hasUpvoted(post)" ng-click="vm.downvote(post)" class="btn btn-danger">
+                <span class="glyphicon glyphicon-thumbs-down" style="vertical-align:middle"></span>
+            </button>
+            <span style="padding-left: 8px">
+            <strong>{{ post.upvotes.length }}</strong> upvotes
+        </span>
+        </div>
     </div>
 </script>

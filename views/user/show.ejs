@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="/user.html">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="row" style="margin-bottom: 16px">
                 <div class="col-xs-12">
                     <img src="{{vm.gravatar(vm.user.email, 165)}}" alt="{{vm.user.firstName}} {{vm.user.lastName}}">
@@ -24,19 +24,13 @@
             </div>
 
         </div>
-        <div class="col-md-10">
+        <div class="col-md-9">
             <div class="row">
                 <div class="col-md-12">
                     <h1>{{vm.user.firstName}} {{vm.user.lastName}}</h1>
-                    <hr>
                 </div>
             </div>
             <div ng-hide="vm.user._id !== vm.currentUser()._id">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>Tweet about something ...</h2>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <flash-message duration="5000" show-close="true"></flash-message>
@@ -44,24 +38,21 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <form ng-submit="vm.create()">
-                            <div class="form-group">
-                                <input type="text"
-                                       id="body"
-                                       class="form-control"
-                                       placeholder="How are you doing today?"
-                                       ng-model="vm.post.body"></input>
+                        <form ng-submit="vm.create()" class="form">
+                            <div class="row">
+                                <div class="form-group col-xs-9 padding-right-0">
+                                    <input type="text"
+                                           id="body"
+                                           class="form-control tweet-input"
+                                           placeholder="How are you doing today?"
+                                           ng-model="vm.post.body"></input>
+                                </div>
+                                <div class="col-xs-3 padding-left-0">
+                                    <button type="submit" class="btn btn-primary form-control tweet-button">Tweet</button>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Post</button>
                         </form>
                     </div>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>Tweets</h2>
                 </div>
             </div>
             <div ng-hide="vm.posts.length !== 0" class="row">
@@ -73,11 +64,21 @@
                 <div ng-repeat="post in vm.posts | orderBy: '-updatedAt'">
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="/#/users/{{ post.author._id }}">{{ post.author.firstName }} {{ post.author.lastName }}</a>, <time datetime="{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}">{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}</time>
-                            <br>
-                            {{ post.body }}
-                            <br><br>
-                            <span class="like" ng-click="vm.incrementUpvotes(post)">Like</span> - {{ post.upvotes }}
+                            <div class="tweet-card">
+                                <a href="/#/users/{{ post.author._id }}">{{ post.author.firstName }} {{ post.author.lastName }}</a><time class="datetime" datetime="{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}">{{ post.updatedAt | relativeDate }}</time>
+                                <br>
+                                {{ post.body }}
+                                <br><br>
+                                <button ng-hide="vm.hasUpvoted(post)" ng-click="vm.upvote(post)" class="btn btn-success">
+                                    <span class="glyphicon glyphicon-thumbs-up" style="vertical-align:middle"></span>
+                                </button>
+                                <button ng-show="vm.hasUpvoted(post)" ng-click="vm.downvote(post)" class="btn btn-danger">
+                                    <span class="glyphicon glyphicon-thumbs-down" style="vertical-align:middle"></span>
+                                </button>
+                                <span style="padding-left: 8px">
+                                    <strong>{{ post.upvotes.length }}</strong> upvote<span ng-show="post.upvotes.length !== 1">s</span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>

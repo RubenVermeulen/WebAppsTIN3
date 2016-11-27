@@ -5,19 +5,20 @@ angular.module('webApps').controller('MainController',
         vm.isLoggedIn = auth.isLoggedIn;
         vm.post = {};
         vm.posts = posts.posts;
-        vm.createPost = createPost;
-        vm.incrementUpvotes = incrementUpvotes;
+        vm.upvote = upvote;
+        vm.downvote = downvote;
+        vm.hasUpvoted = hasUpvoted;
 
-        function createPost() {
-            posts.create(vm.post).error(function(error) {
-                vm.error = error;
-            }).then(function() {
-                $state.go('timeline');
-            });
+        function upvote(post) {
+            posts.upvote(post);
         }
 
-        function incrementUpvotes(post) {
-            posts.upvote(post);
+        function downvote(post) {
+            posts.downvote(post);
+        }
+
+        function hasUpvoted(post) {
+            return post.upvotes.indexOf(auth.currentUser()._id) !== -1;
         }
     }
 );
