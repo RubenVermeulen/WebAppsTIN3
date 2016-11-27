@@ -86,6 +86,12 @@ angular.module('webApps').config(
                 }],
                 userPosts: ['$stateParams', 'posts', function($stateParams, posts) {
                     return posts.get($stateParams.id);
+                }],
+                followers: ['$stateParams', 'users', function($stateParams, users) {
+                    return users.getFollowers($stateParams.id);
+                }],
+                following: ['$stateParams', 'users', function($stateParams, users) {
+                    return users.getFollowing($stateParams.id);
                 }]
             }
         });

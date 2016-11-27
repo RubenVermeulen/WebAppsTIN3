@@ -7,6 +7,8 @@ angular.module('webApps').controller('UsersController',
         vm.user = users.user;
         vm.users = users.users;
         vm.posts = posts.posts;
+        vm.followers = users.followers;
+        vm.following = users.following;
 
         vm.create = create;
         vm.subscribe = subscribe;
@@ -37,6 +39,7 @@ angular.module('webApps').controller('UsersController',
                 Flash.create('danger', '<strong>Danger!</strong> Could not follow ' + user.firstName + ' ' + user.lastName + '.');
             }).then(function() {
                 user.followers.push(auth.currentUser()._id);
+                vm.followers.push(auth.currentUser());
             });
         }
 
@@ -45,7 +48,9 @@ angular.module('webApps').controller('UsersController',
                 Flash.create('danger', '<strong>Danger!</strong> Could not unfollow ' + user.firstName + ' ' + user.lastName + '.');
             }).then(function() {
                 var index = user.followers.indexOf(auth.currentUser()._id);
+
                 user.followers.splice(index, 1);
+                vm.followers.splice(index, 1);
             });
         }
 

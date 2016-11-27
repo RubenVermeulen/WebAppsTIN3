@@ -46,18 +46,30 @@ router.get('/', auth, function(req, res, next) {
 
 router.get('/:user', auth, function(req, res, next) {
 
+    return res.json(req.user);
+
+});
+
+router.get('/:user/followers', auth, function(req, res, next) {
+
+    req.user.populate('followers',function(err, user) {
+        if (err) {
+            return next(err);
+        }
+
+        return res.json(user.followers);
+    });
+
+});
+
+router.get('/:user/following', auth, function(req, res, next) {
+
     req.user.populate('follows',function(err, user) {
         if (err) {
             return next(err);
         }
 
-        user.populate('followers', function(err, user) {
-            if (err) {
-                return next(err);
-            }
-
-            return res.json(user);
-        });
+        return res.json(user.following);
     });
 
 });

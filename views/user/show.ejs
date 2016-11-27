@@ -113,12 +113,12 @@
                 <div class="tweet-card">
                     <h4>Followers</h4>
 
-                    <div ng-show="vm.user.followers.length === 0">
+                    <div ng-show="vm.followers.length === 0">
                         <hr>
                         <p><strong>{{ vm.user.firstName }} {{ vm.user.lastName }}</strong> has no followers.</p>
                     </div>
 
-                    <div ng-repeat="follower in vm.user.followers | orderBy: ['firstName', 'lastName']">
+                    <div ng-repeat="follower in vm.followers | orderBy: ['firstName', 'lastName']">
                         <hr>
                         <div class="row">
                             <div class="col-md-12">
@@ -133,13 +133,13 @@
             <div ng-show="vm.showFollowing">
                 <div class="tweet-card">
                     <h4>Following</h4>
-
-                    <div ng-show="vm.user.follows.length === 0">
+                    {{vm.following}}
+                    <div ng-show="vm.following.length === 0">
                         <hr>
                         <p><strong>{{ vm.user.firstName }} {{ vm.user.lastName }}</strong> is following nobody.</p>
                     </div>
 
-                    <div ng-repeat="follows in vm.user.follows | orderBy: ['firstName', 'lastName']">
+                    <div ng-repeat="follows in vm.following | orderBy: ['firstName', 'lastName']">
                         <hr>
                         <div class="row">
                             <div class="col-md-12">

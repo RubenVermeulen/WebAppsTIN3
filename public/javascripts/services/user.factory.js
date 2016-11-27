@@ -3,11 +3,15 @@ angular.module('webApps').factory('users', function($http, auth) {
         user: {},
         users: [],
         posts: [],
+        followers: [],
+        following: [],
 
         getAll: getAll,
         get: get,
         subscribe: subscribe,
-        unsubscribe: unsubscribe
+        unsubscribe: unsubscribe,
+        getFollowers: getFollowers,
+        getFollowing: getFollowing
     };
 
     function getAll() {
@@ -35,6 +39,22 @@ angular.module('webApps').factory('users', function($http, auth) {
     function unsubscribe(userId) {
         return $http.put('/users/unsubscribe', userId, {
             headers: {Authorization: 'Bearer ' + auth.getToken()}
+        });
+    }
+
+    function getFollowers(userId) {
+        return $http.get('/users/' + userId + '/followers', {
+            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        }).success(function(data) {
+            o.followers = data;
+        });
+    }
+
+    function getFollowing(userId) {
+        return $http.get('/users/' + userId + '/following', {
+            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        }).success(function(data) {
+            o.following = data;
         });
     }
 
