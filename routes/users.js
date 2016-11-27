@@ -6,6 +6,7 @@ var jwt = require('express-jwt');
 
 // models
 var User = mongoose.model('User');
+var Post = mongoose.model('Post');
 
 // middlewares
 var auth = jwt({
@@ -55,15 +56,17 @@ router.get('/:user', auth, function(req, res, next) {
 
 });
 
-router.get('/:user/follows', auth, function(req, res, next) {
+router.get('/:user/tweets', auth, function(req, res, next) {
 
-    req.user.populate('follows', function(err, user) {
-        if (err) {
-            return next(err);
-        }
+    Post.find({author: req.user._id})
+        .populate('author')
+        .exec(function(err, posts) {
+            if (err) {
+                return next(err);
+            }
 
-        return res.json(user.follows);
-    });
+            return res.json(posts);
+        });
 
 });
 

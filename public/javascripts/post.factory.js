@@ -1,19 +1,17 @@
-angular.module('webApps').factory('posts', function($http, auth) {
+angular.module('webApps').factory('posts', function($http, auth, Flash) {
     var o = {
         posts: [],
         getAll: getAll,
         create: create,
         upvote: upvote,
-        get: get,
-        addComment: addComment,
-        upvoteComment: upvoteComment
+        get: get
     };
 
     function getAll() {
         return $http.get('/posts', {
             headers: {Authorization: 'Bearer ' + auth.getToken()}
-        }).then(function(data) {
-            angular.copy(data.data, o.posts);
+        }).success(function(data) {
+            angular.copy(data, o.posts);
         });
     }
 
@@ -21,7 +19,7 @@ angular.module('webApps').factory('posts', function($http, auth) {
         return $http.post('/posts', post, {
             headers: {Authorization: 'Bearer ' + auth.getToken()}
         }).success(function(data) {
-            o.posts.push(data);
+            o.posts.push(data.data);
         });
     }
 
@@ -33,25 +31,11 @@ angular.module('webApps').factory('posts', function($http, auth) {
         });
     }
 
-    function get(id) {
-        return $http.get('/posts/' + id, {
+    function get(userId) {
+        return $http.get('/users/' + userId + '/tweets', {
             headers: {Authorization: 'Bearer ' + auth.getToken()}
-        }).then(function(res) {
-            return res.data;
-        });
-    }
-
-    function addComment(id, comment) {
-        return $http.post('/posts/' + id + '/comments', comment, {
-            headers: {Authorization: 'Bearer ' + auth.getToken()}
-        });
-    }
-
-    function upvoteComment(post, comment) {
-        return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote', null, {
-            headers: {Authorization: 'Bearer ' + auth.getToken()}
-        }).success(function() {
-            comment.upvotes += 1;
+        }).success(function(data) {
+            angular.copy(data, o.posts);
         });
     }
 

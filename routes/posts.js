@@ -6,7 +6,6 @@ var jwt = require('express-jwt');
 
 // models
 var Post = mongoose.model('Post');
-var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
 
 // middlewares
@@ -33,24 +32,6 @@ router.param('post', function(req, res, next, id) {
     });
 });
 
-router.param('comment', function(req, res, next, id) {
-    var query = Comment.findById(id);
-
-    query.exec(function(err, comment) {
-        if (err) {
-            return next(err);
-        }
-
-        if ( ! comment) {
-            return next(new Error('can\'t find comment'));
-        }
-
-        req.comment = comment;
-
-        return next();
-    });
-});
-
 router.get('/', auth, function(req, res, next) {
 
     User.findOne({_id: req.payload._id} ,function(err, user) {
@@ -72,6 +53,11 @@ router.get('/', auth, function(req, res, next) {
 });
 
 router.post('/', auth, function(req, res, next) {
+
+    if (!req.body.body || req.body.body === '') {
+        return res.status(400).json({message: 'Please fill out all fields'});
+    }
+
     var post = new Post(req.body);
     post.author = req.payload._id;
 
@@ -80,53 +66,18 @@ router.post('/', auth, function(req, res, next) {
             return next(err);
         }
 
-        res.json(post);
-    });
-});
+        post.populate('author', function(err, post) {
+            if (err) {
+                return next(err);
+            }
 
-router.get('/:post', function(req, res) {
-    req.post.populate('comments', function(err, post) {
-        if (err) {
-            return next(err);
-        }
-
-        res.json(req.post);
+            res.json(post);
+        });
     });
 });
 
 router.put('/:post/upvote', auth, function(req, res, next) {
     req.post.upvote(function(err, post) {
-        if (err) {
-            return next(err);
-        }
-
-        res.json(post);
-    });
-});
-
-router.post('/:post/comments', auth, function(req, res, next) {
-    var comment = new Comment(req.body);
-    comment.post = req.post;
-    comment.author = req.payload.username;
-
-    comment.save(function(err, comment) {
-        if (err) {
-            return next(err);
-        }
-
-        req.post.comments.push(comment);
-        req.post.save(function(err, post) {
-            if (err) {
-                return next(err);
-            }
-
-            res.json(comment);
-        });
-    });
-});
-
-router.put('/:post/comments/:comment/upvote', auth, function(req, res, next) {
-    req.comment.upvote(function(err, post) {
         if (err) {
             return next(err);
         }

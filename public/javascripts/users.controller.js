@@ -1,15 +1,28 @@
 angular.module('webApps').controller('UsersController',
-    function($state, auth, users, Flash, md5) {
+    function($state, auth, users, posts, Flash, md5) {
         var vm = this;
 
         vm.isLoggedIn = auth.isLoggedIn;
+        vm.currentUser = auth.currentUser;
         vm.user = users.user;
         vm.users = users.users;
+        vm.posts = posts.posts;
 
+        vm.create = create;
         vm.subscribe = subscribe;
         vm.unsubscribe = unsubscribe;
         vm.isSubscribed = isSubscribed;
         vm.gravatar = gravatar;
+
+        function create() {
+            posts.create(vm.post).error(function() {
+                Flash.create('danger', '<strong>Danger!</strong> All fields are required.');
+            }).then(function() {
+                Flash.create('success', '<strong>Success!</strong> Tweet sent to the Bird Capital.');
+            });
+
+            vm.post = {};
+        }
 
         function subscribe(user) {
             users.subscribe({userId: user._id}).error(function() {

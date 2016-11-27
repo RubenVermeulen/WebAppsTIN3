@@ -2,6 +2,8 @@ angular.module('webApps').factory('users', function($http, auth) {
     var o = {
         user: {},
         users: [],
+        posts: [],
+
         getAll: getAll,
         get: get,
         subscribe: subscribe,
@@ -11,8 +13,8 @@ angular.module('webApps').factory('users', function($http, auth) {
     function getAll() {
         return $http.get('/users', {
             headers: {Authorization: 'Bearer ' + auth.getToken()}
-        }).success(function(data) {
-            angular.copy(data, o.users);
+        }).then(function(data) {
+            angular.copy(data.data, o.users);
         });
     }
 

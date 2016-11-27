@@ -62,7 +62,7 @@ angular.module('webApps').config(
             }],
             resolve: {
                 postPromise: ['users', function(users) {
-                    return users.getAll();
+                    users.getAll();
                 }]
             }
         }).state('user', {
@@ -78,6 +78,9 @@ angular.module('webApps').config(
             resolve: {
                 user: ['$stateParams', 'users', function($stateParams, users) {
                     return users.get($stateParams.id);
+                }],
+                userPosts: ['$stateParams', 'posts', function($stateParams, posts) {
+                    return posts.get($stateParams.id);
                 }]
             }
         });
