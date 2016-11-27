@@ -7,7 +7,8 @@ angular.module('webApps').factory('auth', function($http, $window) {
         register: register,
         logIn: logIn,
         logOut: logOut,
-        changePassword: changePassword
+        changePassword: changePassword,
+        updateProfile: updateProfile
     };
 
     function saveToken(token) {
@@ -57,6 +58,12 @@ angular.module('webApps').factory('auth', function($http, $window) {
 
     function changePassword(user) {
         return $http.put('/auth/changePassword', user, {
+            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        });
+    }
+
+    function updateProfile(user) {
+        return $http.put('/auth/updateProfile', user, {
             headers: {Authorization: 'Bearer ' + auth.getToken()}
         });
     }

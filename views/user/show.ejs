@@ -12,24 +12,43 @@
                     <button ng-show="vm.isSubscribed(vm.user)" ng-click="vm.unsubscribe(vm.user)" class="btn btn-danger btn-block" style="margin-top: 0">Unfollow</button>
                 </div>
             </div>
-            <div class="row" style="margin-bottom: 8px">
-                <div class="col-xs-12">
-                    <strong>Followers:</strong> <span style="padding-left: 16px">{{vm.user.followers.length}}</span>
+            <div ng-show="vm.user.website" class="row" style="margin-bottom: 8px">
+                <div class="col-xs-12 truncate">
+                    <a href="{{vm.user.website}}">{{vm.user.website}}</a>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <strong>Following:</strong> <span style="padding-left: 16px">{{vm.user.follows.length}}</span>
+            <div ng-show="vm.user.about" class="row" style="margin-bottom: 8px">
+                <div class="col-xs-12 about">
+                    {{vm.user.about}}
                 </div>
             </div>
-
         </div>
         <div class="col-md-9">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>{{vm.user.firstName}} {{vm.user.lastName}}</h1>
+                    <h1 class="margin-bottom-0">{{vm.user.firstName}} {{vm.user.lastName}}</h1>
                 </div>
             </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <h3 class="margin-0"><strong>{{vm.user.followers.length}}</strong></h3>
+                            followers
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <h3 class="margin-0"><strong>{{vm.user.follows.length}}</strong></h3>
+                            following
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
             <div ng-hide="vm.user._id !== vm.currentUser()._id">
                 <div class="row">
                     <div class="col-md-12">

@@ -78,7 +78,7 @@ router.put('/changePassword', auth, function(req, res, next) {
         return res.status(400).json({message: 'Confirm password is different from new password.'});
     }
 
-    User.findOne({email: req.payload.email}, function (err, user) {
+    User.findOne({_id: req.payload._id}, function (err, user) {
         if (err) {
             return next(err);
         }
@@ -107,6 +107,32 @@ router.put('/changePassword', auth, function(req, res, next) {
 
             return res.json({message: 'Password changed.'});
         });
+    });
+
+});
+
+router.put('/updateProfile', auth, function(req, res, next) {
+
+    User.findOne({_id: req.payload._id}, function(err, user) {
+        if (err) {
+            return next(err);
+        }
+
+        if (req.body.about) {
+            user.about = req.body.about;
+        }
+
+        if (req.body.website) {
+            user.website = req.body.website;
+        }
+
+        user.save(function(err) {
+            if (err) {
+                return next(err);
+            }
+
+            return res.json(user);
+        })
     });
 
 });

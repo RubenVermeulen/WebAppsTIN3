@@ -73,3 +73,21 @@ span.like:hover {
 .margin-top-30 {
     margin-top: 30px;
 }
+
+.truncate{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.margin-0 {
+    margin: 0;
+}
+
+.margin-bottom-0 {
+    margin-bottom: 0;
+}
+
+.about {
+    line-height: 1.4;
+}

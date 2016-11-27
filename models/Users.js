@@ -6,6 +6,8 @@ var UserSchema = new mongoose.Schema({
     email: {type: String, lowercase: true, unique: true},
     firstName: String,
     lastName: String,
+    about: String,
+    website: String,
     hash: String,
     salt: String,
     follows: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],

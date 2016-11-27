@@ -6,6 +6,7 @@ angular.module('webApps').controller('AuthController',
         vm.register = register;
         vm.logIn = logIn;
         vm.changePassword = changePassword;
+        vm.updateProfile = updateProfile;
 
         function register() {
             auth.register(vm.user).error(function(error) {
@@ -28,6 +29,15 @@ angular.module('webApps').controller('AuthController',
                 Flash.create('danger', '<strong>Danger!</strong> ' + error.message );
             }).success(function(success) {
                 Flash.create('success', '<strong>Success!</strong> Password changed!');
+                vm.user = {};
+            })
+        }
+
+        function updateProfile() {
+            auth.updateProfile(vm.user).error(function(error) {
+                Flash.create('danger', '<strong>Danger!</strong> ' + error.message );
+            }).success(function(success) {
+                Flash.create('success', '<strong>Success!</strong> profile updated!');
                 vm.user = {};
             })
         }

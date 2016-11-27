@@ -45,6 +45,16 @@ angular.module('webApps').config(
                     $state.go('login');
                 }
             }]
+        }).state('update-profile', {
+            url: '/update-profile',
+            templateUrl: '/update-profile.html',
+            controller: 'AuthController',
+            controllerAs: 'vm',
+            onEnter: ['$state', 'auth', function($state, auth) {
+                if (!auth.isLoggedIn()) {
+                    $state.go('login');
+                }
+            }]
         }).state('users', {
             url: '/users',
             templateUrl: '/users.html',
