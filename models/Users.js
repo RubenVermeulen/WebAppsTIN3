@@ -8,7 +8,8 @@ var UserSchema = new mongoose.Schema({
     lastName: String,
     hash: String,
     salt: String,
-    follows: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
+    follows: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
 

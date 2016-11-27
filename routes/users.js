@@ -50,7 +50,7 @@ router.get('/:user', auth, function(req, res, next) {
             return next(err);
         }
 
-
+        return res.json(user);
     });
 
 });
@@ -75,6 +75,22 @@ router.put('/subscribe', auth, function(req, res, next) {
         return res.status(400).json({message: 'User id required'});
     }
 
+    // Followers
+    User.findOne({_id: userId}, function(err, user) {
+        if (err) {
+            return next(err);
+        }
+
+        user.followers.push(req.payload._id);
+
+        user.save(function(err) {
+            if (err) {
+                return next(err);
+            }
+        });
+    });
+
+    // Follows
     User.findOne({_id: req.payload._id}, function(err, user) {
         if (err) {
             return next(err);
@@ -101,6 +117,22 @@ router.put('/unsubscribe', auth, function(req, res, next) {
         return res.status(400).json({message: 'User id required'});
     }
 
+    // Followers
+    User.findOne({_id: userId}, function(err, user) {
+        if (err) {
+            return next(err);
+        }
+
+        user.followers.pull(req.payload._id);
+
+        user.save(function(err) {
+            if (err) {
+                return next(err);
+            }
+        });
+    });
+
+    // Follows
     User.findOne({_id: req.payload._id}, function(err, user) {
         if (err) {
             return next(err);

@@ -1,0 +1,41 @@
+<script type="text/ng-template" id="/user.html">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="row" style="margin-bottom: 16px">
+                <div class="col-xs-12">
+                    <img src="{{vm.gravatar(vm.user.email, 150)}}" alt="{{vm.user.firstName}} {{vm.user.lastName}}">
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 8px">
+                <div class="col-xs-12">
+                    <strong>Followers:</strong> <span style="padding-left: 16px">{{vm.user.followers.length}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <strong>Following:</strong> <span style="padding-left: 16px">{{vm.user.follows.length}}</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>{{vm.user.firstName}} {{vm.user.lastName}}</h1>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Tweets</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p>Nothing has been tweeted yet? Time to tweet!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</script>

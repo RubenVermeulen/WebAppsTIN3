@@ -65,6 +65,21 @@ angular.module('webApps').config(
                     return users.getAll();
                 }]
             }
+        }).state('user', {
+            url: '/users/{id}',
+            templateUrl: '/user.html',
+            controller: 'UsersController',
+            controllerAs: 'vm',
+            onEnter: ['$state', 'auth', function($state, auth) {
+                if ( ! auth.isLoggedIn()) {
+                    $state.go('login');
+                }
+            }],
+            resolve: {
+                user: ['$stateParams', 'users', function($stateParams, users) {
+                    return users.get($stateParams.id);
+                }]
+            }
         });
 
         $urlRouterProvider.otherwise('home');

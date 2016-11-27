@@ -1,9 +1,9 @@
 angular.module('webApps').factory('users', function($http, auth) {
     var o = {
+        user: {},
         users: [],
         getAll: getAll,
         get: get,
-        follows: follows,
         subscribe: subscribe,
         unsubscribe: unsubscribe
     };
@@ -19,12 +19,8 @@ angular.module('webApps').factory('users', function($http, auth) {
     function get(userId) {
         return $http.get('/users/' + userId, {
             headers: {Authorization: 'Bearer ' + auth.getToken()}
-        });
-    }
-
-    function follows(userId) {
-        return $http.get('/users/' + userId + '/follows', {
-            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        }).then(function(data) {
+            o.user = data.data;
         });
     }
 
