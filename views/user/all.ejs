@@ -10,15 +10,20 @@
     <hr>
     <div ng-repeat="user in vm.users | orderBy: ['firstName', 'lastName']">
         <div class="row" style="padding-top: 8px; padding-bottom: 8px;">
-            <div class="col-xs-5">
+            <div class="col-xs-12 col-md-2 line-height-50">
+                <a href="/#/users/{{user._id}}">
+                    <img src="{{vm.gravatar(user.email, 50)}}" alt="{{ user.firstName }} {{ user.lastName }}">
+                </a>
+            </div>
+            <div class="col-xs-6 col-md-4 line-height-50">
                 <a href="/#/users/{{user._id}}">
                     {{user.firstName}} {{user.lastName}}
                 </a>
             </div>
-            <div class="col-xs-5">
+            <div class="col-xs-6 col-md-4 line-height-50">
                 {{user.email}}
             </div>
-            <div class="col-xs-2">
+            <div class="col-xs-12 col-md-2 line-height-50">
                     <button ng-hide="vm.isSubscribed(user)" ng-click="vm.subscribe(user)" class="btn btn-success">Follow</button>
                     <button ng-show="vm.isSubscribed(user)" ng-click="vm.unsubscribe(user)" class="btn btn-danger">Unfollow</button>
             </div>

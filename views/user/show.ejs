@@ -35,15 +35,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-4 text-center">
+                        <div class="col-xs-4 text-center">
                             <h3 class="margin-0"><strong>{{vm.posts.length}}</strong></h3>
                             <a href="" ng-click="vm.toggleTabs('tweets')">tweets</a>
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div class="col-xs-4 text-center">
                             <h3 class="margin-0"><strong>{{vm.user.followers.length}}</strong></h3>
                             <a href="" ng-click="vm.toggleTabs('followers')">followers</a>
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div class="col-xs-4 text-center">
                             <h3 class="margin-0"><strong>{{vm.user.follows.length}}</strong></h3>
                             <a href="" ng-click="vm.toggleTabs('following')">following</a>
                         </div>
@@ -121,7 +121,10 @@
                     <div ng-repeat="follower in vm.followers | orderBy: ['firstName', 'lastName']">
                         <hr>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-sm-2 line-height-50">
+                                <img src="{{vm.gravatar(follower.email, 50)}}" alt="{{ follower.firstName }} {{ follower.lastName }}">
+                            </div>
+                            <div class="col-sm-10 line-height-50">
                                 <a href="/#/users/{{ follower._id }}"><strong>{{ follower.firstName }} {{ follower.lastName }}</strong> ({{ follower.email }})</a>
                             </div>
                         </div>
@@ -142,7 +145,10 @@
                     <div ng-repeat="follows in vm.following | orderBy: ['firstName', 'lastName']">
                         <hr>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-sm-2 line-height-50">
+                                <img src="{{vm.gravatar(follows.email, 50)}}" alt="{{ follows.firstName }} {{ follows.lastName }}">
+                            </div>
+                            <div class="col-sm-10 line-height-50">
                                 <a href="/#/users/{{ follows._id }}"><strong>{{ follows.firstName }} {{ follows.lastName }}</strong> ({{ follows.email }})</a>
                             </div>
                         </div>

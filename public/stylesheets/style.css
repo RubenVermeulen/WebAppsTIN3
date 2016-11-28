@@ -91,3 +91,7 @@ span.like:hover {
 .about {
     line-height: 1.4;
 }
+
+.line-height-50 {
+    line-height: 50px;
+}
