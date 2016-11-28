@@ -34,20 +34,22 @@ router.param('post', function(req, res, next, id) {
 
 router.get('/', auth, function(req, res, next) {
 
-    User.findOne({_id: req.payload._id} ,function(err, user) {
+    User.findOne({_id: req.payload._id}, function(err, user) {
         if (err) {
             return next(err);
         }
 
-        Post.find({author: {$in: user.follows}})
-            .populate('author')
-            .exec(function(err, posts) {
-                if (err) {
-                    return next(err);
-                }
+        if (user !== null) {
+            Post.find({author: {$in: user.followers}})
+                .populate('author')
+                .exec(function(err, posts) {
+                    if (err) {
+                        return next(err);
+                    }
 
-                return res.json(posts);
-            });
+                    return res.json(posts);
+                });
+        }
     });
 
 });
