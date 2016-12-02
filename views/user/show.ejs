@@ -8,8 +8,12 @@
             </div>
             <div ng-hide="vm.user._id === vm.currentUser()._id" class="row" style="margin-bottom: 16px">
                 <div class="col-xs-12">
-                    <button ng-hide="vm.isSubscribed(vm.user)" ng-click="vm.subscribe(vm.user)" class="btn btn-success btn-block">Follow</button>
-                    <button ng-show="vm.isSubscribed(vm.user)" ng-click="vm.unsubscribe(vm.user)" class="btn btn-danger btn-block" style="margin-top: 0">Unfollow</button>
+                    <button ng-hide="vm.isSubscribed(vm.user)" ng-click="vm.subscribe(vm.user)"
+                            class="btn btn-success btn-block">Follow
+                    </button>
+                    <button ng-show="vm.isSubscribed(vm.user)" ng-click="vm.unsubscribe(vm.user)"
+                            class="btn btn-danger btn-block" style="margin-top: 0">Unfollow
+                    </button>
                 </div>
             </div>
             <div ng-show="vm.user.website" class="row" style="margin-bottom: 8px">
@@ -73,7 +77,8 @@
                                                required></input>
                                     </div>
                                     <div class="col-xs-3 padding-left-0">
-                                        <button type="submit" class="btn btn-primary form-control tweet-button">Tweet</button>
+                                        <button type="submit" class="btn btn-primary form-control tweet-button">Tweet
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -90,19 +95,32 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="tweet-card">
-                                    <a href="/#/users/{{ post.author._id }}">{{ post.author.firstName }} {{ post.author.lastName }}</a><time class="datetime" datetime="{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}">{{ post.updatedAt | relativeDate }}</time>
-                                    <br>
-                                    {{ post.body }}
-                                    <br><br>
-                                    <button ng-hide="vm.hasUpvoted(post)" ng-click="vm.upvote(post)" class="btn btn-success">
-                                        <span class="glyphicon glyphicon-thumbs-up vertical-align-middle"></span>
-                                    </button>
-                                    <button ng-show="vm.hasUpvoted(post)" ng-click="vm.downvote(post)" class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-thumbs-down vertical-align-middle"></span>
-                                    </button>
-                                    <span style="padding-left: 8px">
-                                    <strong>{{ post.upvotes.length }}</strong> upvote<span ng-show="post.upvotes.length !== 1">s</span>
-                                </span>
+                                    <div class="row">
+                                        <div class="col-xs-2 col-md-2">
+                                            <img ng-src="{{ vm.gravatar(post.author.email, 50) }}" alt="">
+                                        </div>
+                                        <div class="col-xs-10 col-md-10">
+                                            <p><strong><a href="/#/users/{{ post.author._id }}">{{ post.author.firstName
+                                                        }} {{ post.author.lastName }}</a></strong>
+                                                <time class="datetime"
+                                                      datetime="{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}">{{
+                                                    post.updatedAt | relativeDate }}
+                                                </time>
+                                            </p>
+                                            <p>{{ post.body }}</p>
+                                            <button ng-hide="vm.hasUpvoted(post)" ng-click="vm.upvote(post)"
+                                                    class="btn btn-sm btn-success">
+                                                <span class="glyphicon glyphicon-thumbs-up vertical-align-middle"></span>
+                                            </button>
+                                            <button ng-show="vm.hasUpvoted(post)" ng-click="vm.downvote(post)"
+                                                    class="btn btn-sm btn-danger">
+                                                <span class="glyphicon glyphicon-thumbs-down vertical-align-middle"></span>
+                                            </button>
+                                            <span class="padding-left-8">
+                                                <strong>{{ post.upvotes.length }}</strong> upvotes
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -123,10 +141,12 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-2 line-height-50">
-                                <img ng-src="{{vm.gravatar(follower.email, 50)}}" alt="{{ follower.firstName }} {{ follower.lastName }}">
+                                <img ng-src="{{vm.gravatar(follower.email, 50)}}"
+                                     alt="{{ follower.firstName }} {{ follower.lastName }}">
                             </div>
                             <div class="col-sm-10 line-height-50">
-                                <a href="/#/users/{{ follower._id }}"><strong>{{ follower.firstName }} {{ follower.lastName }}</strong> ({{ follower.email }})</a>
+                                <a href="/#/users/{{ follower._id }}"><strong>{{ follower.firstName }} {{
+                                        follower.lastName }}</strong> ({{ follower.email }})</a>
                             </div>
                         </div>
 
@@ -147,10 +167,12 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-2 line-height-50">
-                                <img ng-src="{{vm.gravatar(follows.email, 50)}}" alt="{{ follows.firstName }} {{ follows.lastName }}">
+                                <img ng-src="{{vm.gravatar(follows.email, 50)}}"
+                                     alt="{{ follows.firstName }} {{ follows.lastName }}">
                             </div>
                             <div class="col-sm-10 line-height-50">
-                                <a href="/#/users/{{ follows._id }}"><strong>{{ follows.firstName }} {{ follows.lastName }}</strong> ({{ follows.email }})</a>
+                                <a href="/#/users/{{ follows._id }}"><strong>{{ follows.firstName }} {{ follows.lastName
+                                        }}</strong> ({{ follows.email }})</a>
                             </div>
                         </div>
                     </div>

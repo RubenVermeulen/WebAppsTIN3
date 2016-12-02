@@ -46,7 +46,8 @@ span.like:hover {
     padding-left: 6px;
 }
 
-.form-control {
+.form-control,
+img {
     border-radius: 2px;
 }
 
@@ -94,4 +95,9 @@ span.like:hover {
 
 .line-height-50 {
     line-height: 50px;
+}
+
+.padding-left-8 {
+    display: inline-block;
+    padding-left: 8px;
 }

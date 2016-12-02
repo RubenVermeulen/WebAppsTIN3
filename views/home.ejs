@@ -1,25 +1,34 @@
 <script type="text/ng-template" id="/timeline.html">
-    <h1>Tweets</h1>
+    <div class="row">
+        <div class=" col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+            <h1>Tweets</h1>
 
-    <div ng-show="vm.posts.length === 0">
-        <p>Start following people to see something on this page! 🕵</p>
-    </div>
+            <div ng-show="vm.posts.length === 0">
+                <p>Start following people to see something on this page! 🕵</p>
+            </div>
 
-    <div ng-repeat="post in vm.posts | orderBy: '-updatedAt'">
-        <div class="tweet-card">
-            <strong><a href="/#/users/{{ post.author._id }}">{{ post.author.firstName }} {{ post.author.lastName }}</a></strong><time class="datetime" datetime="{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}">{{ post.updatedAt | relativeDate }}</time>
-            <br>
-            {{ post.body }}
-            <br><br>
-            <button ng-hide="vm.hasUpvoted(post)" ng-click="vm.upvote(post)" class="btn btn-success">
-                <span class="glyphicon glyphicon-thumbs-up vertical-align-middle"></span>
-            </button>
-            <button ng-show="vm.hasUpvoted(post)" ng-click="vm.downvote(post)" class="btn btn-danger">
-                <span class="glyphicon glyphicon-thumbs-down vertical-align-middle"></span>
-            </button>
-            <span style="padding-left: 8px">
-            <strong>{{ post.upvotes.length }}</strong> upvotes
-        </span>
+            <div ng-repeat="post in vm.posts | orderBy: '-updatedAt'">
+                <div class="tweet-card">
+                    <div class="row">
+                        <div class="col-xs-2 col-md-2">
+                            <img ng-src="{{ vm.gravatar(post.author.email, 50) }}" alt="">
+                        </div>
+                        <div class="col-xs-10 col-md-10">
+                            <p><strong><a href="/#/users/{{ post.author._id }}">{{ post.author.firstName }} {{ post.author.lastName }}</a></strong><time class="datetime" datetime="{{ post.updatedAt | date:'yyyy-MM-dd HH:mm' }}">{{ post.updatedAt | relativeDate }}</time></p>
+                            <p>{{ post.body }}</p>
+                            <button ng-hide="vm.hasUpvoted(post)" ng-click="vm.upvote(post)" class="btn btn-sm btn-success">
+                                <span class="glyphicon glyphicon-thumbs-up vertical-align-middle"></span>
+                            </button>
+                            <button ng-show="vm.hasUpvoted(post)" ng-click="vm.downvote(post)" class="btn btn-sm btn-danger">
+                                <span class="glyphicon glyphicon-thumbs-down vertical-align-middle"></span>
+                            </button>
+                            <span class="padding-left-8">
+                                <strong>{{ post.upvotes.length }}</strong> upvotes
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </script>
