@@ -3,7 +3,7 @@
         <div class="col-md-3">
             <div class="row" style="margin-bottom: 16px">
                 <div class="col-xs-12">
-                    <img src="{{vm.gravatar(vm.user.email, 165)}}" alt="{{vm.user.firstName}} {{vm.user.lastName}}">
+                    <img ng-src="{{vm.gravatar(vm.user.email, 165)}}" alt="{{vm.user.firstName}} {{vm.user.lastName}}">
                 </div>
             </div>
             <div ng-hide="vm.user._id === vm.currentUser()._id" class="row" style="margin-bottom: 16px">
@@ -123,7 +123,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-2 line-height-50">
-                                <img src="{{vm.gravatar(follower.email, 50)}}" alt="{{ follower.firstName }} {{ follower.lastName }}">
+                                <img ng-src="{{vm.gravatar(follower.email, 50)}}" alt="{{ follower.firstName }} {{ follower.lastName }}">
                             </div>
                             <div class="col-sm-10 line-height-50">
                                 <a href="/#/users/{{ follower._id }}"><strong>{{ follower.firstName }} {{ follower.lastName }}</strong> ({{ follower.email }})</a>
@@ -147,7 +147,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-2 line-height-50">
-                                <img src="{{vm.gravatar(follows.email, 50)}}" alt="{{ follows.firstName }} {{ follows.lastName }}">
+                                <img ng-src="{{vm.gravatar(follows.email, 50)}}" alt="{{ follows.firstName }} {{ follows.lastName }}">
                             </div>
                             <div class="col-sm-10 line-height-50">
                                 <a href="/#/users/{{ follows._id }}"><strong>{{ follows.firstName }} {{ follows.lastName }}</strong> ({{ follows.email }})</a>

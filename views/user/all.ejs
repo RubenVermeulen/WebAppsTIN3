@@ -12,7 +12,7 @@
         <div class="row" style="padding-top: 8px; padding-bottom: 8px;">
             <div class="col-xs-12 col-md-2 line-height-50">
                 <a href="/#/users/{{user._id}}">
-                    <img src="{{vm.gravatar(user.email, 50)}}" alt="{{ user.firstName }} {{ user.lastName }}">
+                    <img ng-src="{{vm.gravatar(user.email, 50)}}" alt="{{ user.firstName }} {{ user.lastName }}">
                 </a>
             </div>
             <div class="col-xs-6 col-md-4 line-height-50">
