@@ -85,7 +85,6 @@ router.put('/changePassword', auth, function(req, res, next) {
 
         if (!user.validPassword(req.body.passwordCurrent)) {
             return res.status(400).json({message: 'Incorrect password.'});
-            // return done(null, false, {message: 'Incorrect password.'});
         }
 
         user.setPassword(req.body.passwordNew);
@@ -117,6 +116,8 @@ router.put('/updateProfile', auth, function(req, res, next) {
         if (err) {
             return next(err);
         }
+
+
 
         if (req.body.about) {
             user.about = req.body.about;
