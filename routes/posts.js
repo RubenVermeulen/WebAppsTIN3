@@ -34,7 +34,7 @@ router.param('post', function(req, res, next, id) {
 
 router.get('/', auth, function(req, res, next) {
 
-    User.findOne({_id: req.payload._id}, function(err, user) {
+    User.findById(req.payload._id, function(err, user) {
         if (err) {
             return next(err);
         }

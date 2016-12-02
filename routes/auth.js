@@ -78,7 +78,7 @@ router.put('/changePassword', auth, function(req, res, next) {
         return res.status(400).json({message: 'Confirm password is different from new password.'});
     }
 
-    User.findOne({_id: req.payload._id}, function (err, user) {
+    User.findById(req.payload._id, function (err, user) {
         if (err) {
             return next(err);
         }
@@ -112,7 +112,7 @@ router.put('/changePassword', auth, function(req, res, next) {
 
 router.put('/updateProfile', auth, function(req, res, next) {
 
-    User.findOne({_id: req.payload._id}, function(err, user) {
+    User.findById(req.payload._id, function(err, user) {
         if (err) {
             return next(err);
         }

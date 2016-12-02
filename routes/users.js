@@ -112,7 +112,7 @@ router.put('/subscribe', auth, function(req, res, next) {
     });
 
     // Follows
-    User.findOne({_id: req.payload._id}, function(err, user) {
+    User.findById(req.payload._id, function(err, user) {
         if (err) {
             return next(err);
         }
@@ -139,7 +139,7 @@ router.put('/unsubscribe', auth, function(req, res, next) {
     }
 
     // Followers
-    User.findOne({_id: userId}, function(err, user) {
+    User.findById(userId, function(err, user) {
         if (err) {
             return next(err);
         }
@@ -154,7 +154,7 @@ router.put('/unsubscribe', auth, function(req, res, next) {
     });
 
     // Follows
-    User.findOne({_id: req.payload._id}, function(err, user) {
+    User.findById(req.payload._id, function(err, user) {
         if (err) {
             return next(err);
         }
