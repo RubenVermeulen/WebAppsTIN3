@@ -1,7 +1,7 @@
 <script type="text/ng-template" id="/users.html">
     <h1>Users</h1>
 
-    <flash-message duration="5000" show-close="true"></flash-message>
+    <% include ../partials/alert.ejs %>
 
     <div ng-show="vm.users.length === 0">
         <p>You're the only one on this lonely planet. 😢</p>

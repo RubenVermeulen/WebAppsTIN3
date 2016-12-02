@@ -2,7 +2,7 @@
     <div class="col-md-6 col-md-offset-3">
         <h1>Register</h1>
 
-        <flash-message duration="5000" show-close="true"></flash-message>
+        <% include ../partials/alert.ejs %>
 
         <form ng-submit="vm.register()" class="margin-top-30">
             <div class="form-group">
