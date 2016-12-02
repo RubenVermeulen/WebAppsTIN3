@@ -117,14 +117,12 @@ router.put('/updateProfile', auth, function(req, res, next) {
             return next(err);
         }
 
-
-
-        if (req.body.about) {
-            user.about = req.body.about;
+        if (req.body.about || req.body.about === '') {
+            user.about = req.body.about ? req.body.about : undefined;
         }
 
-        if (req.body.website) {
-            user.website = req.body.website;
+        if (req.body.website || req.body.website === '') {
+            user.website = req.body.website ? req.body.website : undefined;
         }
 
         user.save(function(err) {
