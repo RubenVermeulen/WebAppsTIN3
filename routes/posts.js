@@ -40,7 +40,7 @@ router.get('/', auth, function(req, res, next) {
         }
 
         if (user !== null) {
-            Post.find({$or: [{author: user._id}, {author: {$in: user.followers}}]})
+            Post.find({$or: [{author: user._id}, {author: {$in: user.follows}}]})
                 .populate('author')
                 .exec(function(err, posts) {
                     if (err) {
