@@ -5,6 +5,13 @@ angular.module('webApps').controller('TweetController',
         vm.tweet = tweet;
 
         function tweet() {
+            console.log(vm.post);
+
+            if (vm.post === undefined || vm.post.body === undefined) {
+                Flash.create('danger', '<strong>Danger!</strong> You can\'t tweet something which isn\'t there.');
+                return false;
+            }
+
             posts.create(vm.post).error(function() {
                 Flash.create('danger', '<strong>Danger!</strong> All fields are required.');
             }).success(function() {
