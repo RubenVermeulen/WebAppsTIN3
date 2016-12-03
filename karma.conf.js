@@ -17,7 +17,7 @@ module.exports = function(config) {
     files: [
         'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js',
         'http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js',
-        './node_modules/angular-mocks/angular-mocks.js',
+        'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular-mocks.js',
         'http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js',
         'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.0/moment.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
