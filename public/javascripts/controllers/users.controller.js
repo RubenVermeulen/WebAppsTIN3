@@ -10,7 +10,6 @@ angular.module('webApps').controller('UsersController',
         vm.followers = users.followers;
         vm.following = users.following;
 
-        vm.create = create;
         vm.subscribe = subscribe;
         vm.unsubscribe = unsubscribe;
         vm.isSubscribed = isSubscribed;
@@ -23,16 +22,6 @@ angular.module('webApps').controller('UsersController',
         vm.showFollowers = false;
         vm.showFollowing = false;
         vm.toggleTabs = toggleTabs;
-
-        function create() {
-            posts.create(vm.post).error(function() {
-                Flash.create('danger', '<strong>Danger!</strong> All fields are required.');
-            }).then(function() {
-                Flash.create('success', '<strong>Success!</strong> Tweet sent to the Bird Capital. 👌');
-            });
-
-            vm.post = {};
-        }
 
         function subscribe(user) {
             users.subscribe({userId: user._id}).error(function() {

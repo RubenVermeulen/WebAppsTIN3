@@ -61,29 +61,14 @@
                 <div ng-hide="vm.user._id !== vm.currentUser()._id">
                     <div class="row">
                         <div class="col-md-12">
-                            <flash-message duration="5000" show-close="true"></flash-message>
+                            <% include ../partials/alert.ejs %>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form ng-submit="vm.create()" class="form">
-                                <div class="row">
-                                    <div class="form-group col-xs-9 padding-right-0">
-                                        <input type="text"
-                                               id="body"
-                                               class="form-control tweet-input"
-                                               placeholder="How are you doing today?"
-                                               ng-model="vm.post.body"
-                                               required></input>
-                                    </div>
-                                    <div class="col-xs-3 padding-left-0">
-                                        <button type="submit" class="btn btn-primary form-control tweet-button">Tweet
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+
+                    <div ng-controller="TweetController as vm">
+                        <tweet-form></tweet-form>
                     </div>
+
                 </div>
                 <div ng-hide="vm.posts.length !== 0" class="row">
                     <div class="col-md-12">
