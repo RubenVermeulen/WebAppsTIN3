@@ -24,7 +24,7 @@
                             <img ng-src="{{ vm.gravatar(post.author.email, 50) }}" alt="">
                         </div>
                         <div class="col-xs-10 col-md-10">
-                            <p><strong><a href="/#/users/{{ post.author._id }}">{{ post.author.firstName }} {{ post.author.lastName }}</a></strong><time class="datetime" datetime="{{ post.createdAt | date:'yyyy-MM-dd HH:mm' }}">{{ post.createdAt | relativeDate }}</time></p>
+                            <p><strong><a href="/#/users/{{ post.author._id }}">{{ post.author.firstName }} {{ post.author.lastName }}</a></strong>, <time am-time-ago="post.createdAt"></time></p>
                             <p>{{ post.body }}</p>
                             <button ng-hide="vm.hasUpvoted(post)" ng-click="vm.upvote(post)" class="btn btn-sm btn-success">
                                 <span class="glyphicon glyphicon-thumbs-up vertical-align-middle"></span>
