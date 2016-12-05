@@ -15,6 +15,21 @@ angular.module('webApps').config(
                     return posts.getAll();
                 }]
             }
+        }).state('tweet', {
+            url: '/tweets/{id}',
+            templateUrl: '/tweet.html',
+            controller: 'MainController',
+            controllerAs: 'vm',
+            onEnter: ['$state', 'auth', function($state, auth) {
+                if ( ! auth.isLoggedIn()) {
+                    $state.go('login');
+                }
+            }],
+            resolve: {
+                post: ['$stateParams', 'posts', function($stateParams, posts) {
+                    return posts.getPost($stateParams.id);
+                }]
+            }
         }).state('login', {
             url: '/login',
             templateUrl: '/login.html',

@@ -77,7 +77,14 @@ router.get('/', auth, function(req, res, next) {
 
 router.get('/:post', auth, function(req, res, next) {
 
-    req.post.populate('author').populate('comments',function(err, post) {
+    req.post.populate('author').populate({
+        path: 'comments',
+        model: 'Comment',
+        populate: {
+            path: 'author',
+            model: 'User'
+        }
+    }, function(err, post) {
         if (err) {
             return next(err);
         }
@@ -174,7 +181,13 @@ router.post('/:post', auth, function(req, res, next) {
                 return next(err);
             }
 
-            res.json(comment);
+            comment.populate('author', function(err, comment) {
+                if (err) {
+                    return next(err);
+                }
+
+                res.json(comment);
+            });
         });
     });
 });
