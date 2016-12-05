@@ -1,10 +1,15 @@
 angular.module('webApps').factory('posts', function($http, auth) {
     var o = {
+        post: {},
         posts: [],
         getAll: getAll,
+        getPost: getPost,
         create: create,
+        createComment: createComment,
         upvote: upvote,
+        upvoteComment: upvoteComment,
         downvote: downvote,
+        downvoteComment: downvoteComment,
         get: get
     };
 
@@ -16,11 +21,27 @@ angular.module('webApps').factory('posts', function($http, auth) {
         });
     }
 
+    function getPost(id) {
+        return $http.get('/posts/' + id, {
+            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        }).success(function(data) {
+            o.post = data;
+        });
+    }
+
     function create(post) {
         return $http.post('/posts', post, {
             headers: {Authorization: 'Bearer ' + auth.getToken()}
         }).success(function(data) {
             o.posts.push(data);
+        });
+    }
+
+    function createComment(post, comment) {
+        return $http.post('/posts/' + post._id, comment, {
+            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        }).success(function(data) {
+            o.post.comments.push(data);
         });
     }
 
@@ -46,6 +67,23 @@ angular.module('webApps').factory('posts', function($http, auth) {
         }).success(function() {
             var index = post.upvotes.indexOf(auth.currentUser()._id);
             post.upvotes.splice(index, 1);
+        });
+    }
+
+    function upvoteComment(post, comment) {
+        return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/upvote', null, {
+            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        }).success(function() {
+            comment.upvotes.push(auth.currentUser()._id);
+        });
+    }
+
+    function downvoteComment(post, comment) {
+        return $http.put('/posts/' + post._id + '/comments/' + comment._id + '/downvote', null, {
+            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        }).success(function() {
+            var index = comment.upvotes.indexOf(auth.currentUser()._id);
+            comment.upvotes.splice(index, 1);
         });
     }
 
