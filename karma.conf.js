@@ -22,8 +22,8 @@ module.exports = function(config) {
         'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.0/moment.min.js',
         'https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js',
 
-        './public/javascripts/external/angular-flash.js',
-        './public/javascripts/external/angular-md5.min.js',
+        'public/javascripts/external/angular-flash.min.js',
+        'public/javascripts/external/angular-md5.min.js',
 
         './public/javascripts/angular.model.js',
         './public/javascripts/angularApp.js',
