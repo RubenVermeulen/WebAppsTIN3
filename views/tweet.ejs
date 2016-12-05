@@ -58,10 +58,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <button ng-hide="vm.hasUpvotedComment(comment)" ng-click="vm.upvoteComment(vm.post, comment)" class="btn btn-sm btn-success">
+                                    <button ng-hide="vm.hasUpvoted(comment)" ng-click="vm.upvoteComment(vm.post, comment)" class="btn btn-sm btn-success">
                                         <span class="glyphicon glyphicon-thumbs-up vertical-align-middle"></span>
                                     </button>
-                                    <button ng-show="vm.hasUpvotedComment(comment)" ng-click="vm.downvoteComment(vm.post, comment)" class="btn btn-sm btn-danger">
+                                    <button ng-show="vm.hasUpvoted(comment)" ng-click="vm.downvoteComment(vm.post, comment)" class="btn btn-sm btn-danger">
                                         <span class="glyphicon glyphicon-thumbs-down vertical-align-middle"></span>
                                     </button>
                                     <span class="padding-left-8">

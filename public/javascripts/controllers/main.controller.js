@@ -10,7 +10,6 @@ angular.module('webApps').controller('MainController',
         vm.downvoteComment = downvoteComment;
         vm.downvote = downvote;
         vm.hasUpvoted = hasUpvoted;
-        vm.hasUpvotedComment = hasUpvotedComment;
         vm.gravatar = gravatar;
         vm.comment = comment;
 
@@ -30,12 +29,10 @@ angular.module('webApps').controller('MainController',
             posts.downvoteComment(post, comment);
         }
 
-        function hasUpvoted(post) {
-            return post.upvotes.indexOf(auth.currentUser()._id) !== -1;
-        }
 
-        function hasUpvotedComment(comment) {
-            return comment.upvotes.indexOf(auth.currentUser()._id) !== -1;
+
+        function hasUpvoted(model) {
+            return model.upvotes.indexOf(auth.currentUser()._id) !== -1;
         }
 
         function gravatar(email, size) {
