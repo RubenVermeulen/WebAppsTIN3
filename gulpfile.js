@@ -11,7 +11,7 @@ gulp.task('scripts', function() {
             './public/javascripts/angularApp.js',
             './public/javascripts/services/*.js',
             './public/javascripts/controllers/*.js',
-            './public/javascripts/directives'
+            './public/javascripts/directives/*.js'
         ])
         .pipe(concat('all.js'))
         .pipe(gulp.dest('./public/dist/js'));
