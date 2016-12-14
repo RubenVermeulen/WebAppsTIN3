@@ -50,7 +50,12 @@
                         <div class="col-xs-10 col-md-10">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <p><strong><a href="/#/users/{{ comment.author._id }}">{{ comment.author.firstName }} {{ comment.author.lastName }}</a></strong>, <time am-time-ago="comment.createdAt"></time></p>
+                                    <p>
+                                        <strong><a href="/#/users/{{ comment.author._id }}">{{ comment.author.firstName }} {{ comment.author.lastName }}</a></strong>, <time am-time-ago="comment.createdAt"></time>
+                                        <a ng-show="vm.currentUser()._id == comment.author._id" href="#" class="pull-right" ng-click="vm.deleteComment(vm.post, comment)">
+                                            <span class="glyphicon glyphicon-trash vertical-align-middle"></span>
+                                        </a>
+                                    </p>
                                     <p>{{ comment.body }}</p>
                                 </div>
                             </div>
