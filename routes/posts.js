@@ -217,7 +217,7 @@ router.put('/:post/comments/:comment/downvote', auth, function(req, res, next) {
     var value = req.comment.upvotes.indexOf(req.payload._id);
 
     if (value === -1) {
-        return res.status(400).json({message: 'You\'ve haven\'t upvoted this comment.'})
+        return res.status(400).json({message: 'You\'ve haven\'t upvoted this comment.'});
     }
 
     req.comment.upvotes.pull(req.payload._id);
@@ -230,6 +230,41 @@ router.put('/:post/comments/:comment/downvote', auth, function(req, res, next) {
         return res.json(post);
     });
 
+});
+
+router.delete('/:post/comments/:comment', auth, function(req, res, next) {
+
+    req.comment.populate('author', function(err, comment) {
+        if (err) {
+            return next(err);
+        }
+
+        if (req.payload._id != comment.author._id) {
+            return res.status(400).json({message: 'You are not the comment owner.'});
+        }
+
+        var index = req.post.comments.indexOf(req.comment._id);
+
+        // Remove reference
+        if (index !== -1) {
+            req.post.comments.splice(index, 1);
+        }
+
+        req.post.save(function(err) {
+            if (err) {
+                return next(err);
+            }
+
+            // Remove comment
+            req.comment.remove(function(err, comment) {
+                if (err) {
+                    return next(err);
+                }
+
+                return res.json(comment);
+            });
+        });
+    });
 });
 
 module.exports = router;
