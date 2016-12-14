@@ -5,11 +5,14 @@ angular.module('webApps').controller('MainController',
         vm.isLoggedIn = auth.isLoggedIn;
         vm.post = posts.post;
         vm.posts = posts.posts;
+        vm.currentUser = auth.currentUser;
+
         vm.upvote = upvote;
         vm.upvoteComment = upvoteComment;
         vm.downvoteComment = downvoteComment;
         vm.downvote = downvote;
         vm.hasUpvoted = hasUpvoted;
+        vm.deleteComment = deleteComment;
         vm.gravatar = gravatar;
         vm.comment = comment;
 
@@ -47,12 +50,19 @@ angular.module('webApps').controller('MainController',
 
             posts.createComment(post, vm.postComment).error(function() {
                 Flash.create('danger', '<strong>Danger!</strong> All fields are required.');
-            }).success(function(data) {
-                console.log(data);
+            }).success(function() {
                 Flash.create('success', '<strong>Success!</strong> Tweet sent to the Bird Capital. 👌');
             });
 
             vm.postComment = {};
+        }
+
+        function deleteComment(post, comment) {
+            posts.deleteComment(post, comment).error(function() {
+                Flash.create('danger', '<strong>Danger!</strong> Comment could not be deleted.');
+            }).success(function() {
+                Flash.create('success', '<strong>Success!</strong> Comment is deleted');
+            });
         }
     }
 );

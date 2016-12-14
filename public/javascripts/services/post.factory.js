@@ -10,7 +10,8 @@ angular.module('webApps').factory('posts', function($http, auth) {
         upvoteComment: upvoteComment,
         downvote: downvote,
         downvoteComment: downvoteComment,
-        get: get
+        get: get,
+        deleteComment: deleteComment
     };
 
     function getAll() {
@@ -84,6 +85,15 @@ angular.module('webApps').factory('posts', function($http, auth) {
         }).success(function() {
             var index = comment.upvotes.indexOf(auth.currentUser()._id);
             comment.upvotes.splice(index, 1);
+        });
+    }
+
+    function deleteComment(post, comment) {
+        return $http.delete('/posts/' + post._id + '/comments/' + comment._id, {
+            headers: {Authorization: 'Bearer ' + auth.getToken()}
+        }).success(function() {
+            var index = post.comments.indexOf(comment._id);
+            post.comments.splice(index, 1);
         });
     }
 
